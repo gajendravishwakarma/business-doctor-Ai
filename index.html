@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Doctor AI — AI Business Operating System</title>
+  <meta name="description" content="Business Doctor AI helps small businesses understand their data, find problems, recover customers, automate workflows and grow with evidence-based AI.">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:Arial,Helvetica,sans-serif;background:#07111f;color:#f5f7fb;line-height:1.6}
+    a{text-decoration:none;color:inherit}
+    .container{width:min(1120px,92%);margin:auto}
+    nav{position:sticky;top:0;z-index:10;background:rgba(7,17,31,.94);backdrop-filter:blur(12px);border-bottom:1px solid #1c2b40}
+    .nav{height:70px;display:flex;align-items:center;justify-content:space-between}
+    .logo{font-size:21px;font-weight:800;letter-spacing:-.5px}
+    .logo span{color:#6ea8ff}
+    .navlinks{display:flex;gap:25px;font-size:14px;color:#c6d0df}
+    .btn{display:inline-block;padding:13px 21px;border-radius:10px;background:#6ea8ff;color:#06101e;font-weight:700;border:0}
+    .btn.secondary{background:#14243a;color:#fff;border:1px solid #2b405c}
+    .hero{padding:95px 0 80px;text-align:center;background:radial-gradient(circle at 50% 0,#18365c 0,transparent 52%)}
+    .badge{display:inline-block;padding:7px 13px;border:1px solid #31547c;border-radius:30px;color:#9fc5ff;font-size:13px;margin-bottom:22px;background:#0c1b2e}
+    h1{font-size:clamp(42px,7vw,76px);line-height:1.03;letter-spacing:-3px;max-width:900px;margin:0 auto 24px}
+    .hero h1 span{color:#78adff}
+    .hero p{max-width:720px;margin:0 auto 30px;color:#bdc9d9;font-size:19px}
+    .actions{display:flex;justify-content:center;gap:13px;flex-wrap:wrap}
+    section{padding:78px 0}
+    .section-title{text-align:center;max-width:760px;margin:0 auto 45px}
+    .section-title h2{font-size:38px;letter-spacing:-1px;margin-bottom:12px}
+    .section-title p{color:#aebdce}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:#0d1a2b;border:1px solid #20334c;border-radius:16px;padding:25px}
+    .card h3{font-size:20px;margin-bottom:9px}
+    .card p{color:#aebdce;font-size:15px}
+    .icon{font-size:28px;margin-bottom:13px}
+    .workflow{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+    .step{background:#0d1a2b;border:1px solid #20334c;border-radius:13px;padding:20px 12px;text-align:center}
+    .step strong{display:block;color:#78adff;margin-bottom:6px}
+    .step span{font-size:13px;color:#bdc9d9}
+    .trust{background:#0b1727;border-top:1px solid #1a2c43;border-bottom:1px solid #1a2c43}
+    .trustgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
+    .trust strong{font-size:18px}
+    .trust p{font-size:13px;color:#9eadbf;margin-top:5px}
+    .cta{background:linear-gradient(135deg,#102743,#0b1727);border:1px solid #294a70;border-radius:22px;padding:55px;text-align:center}
+    .cta h2{font-size:40px;margin-bottom:12px}
+    .cta p{color:#b8c6d7;margin-bottom:25px}
+    footer{border-top:1px solid #1c2b40;padding:35px 0;color:#91a1b5;font-size:13px}
+    .footer{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    @media(max-width:800px){
+      .navlinks{display:none}
+      .grid{grid-template-columns:1fr}
+      .workflow{grid-template-columns:repeat(2,1fr)}
+      .trustgrid{grid-template-columns:repeat(2,1fr)}
+      .hero{padding-top:70px}
+      .cta{padding:35px 22px}
+      .cta h2{font-size:31px}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav">
+    <div class="logo">Business <span>Doctor AI</span></div>
+    <div class="navlinks">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#security">Security</a>
+    </div>
+    <a class="btn" href="#start">Get Started</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="badge">AI-Powered Business Operating System</div>
+    <h1>Turn your business data into <span>clear actions.</span></h1>
+    <p>
+      Business Doctor AI helps small businesses understand what is happening,
+      find real problems, recover opportunities, automate workflows and build
+      practical growth plans using evidence from their business data.
+    </p>
+    <div class="actions">
+      <a class="btn" href="#start">Start Your Business Journey</a>
+      <a class="btn secondary" href="#features">Explore Features</a>
+    </div>
+  </div>
+</header>
+
+<section class="trust">
+  <div class="container trustgrid">
+    <div class="trust"><strong>Evidence-Based</strong><p>No invented business metrics</p></div>
+    <div class="trust"><strong>AI Agents</strong><p>Specialized business workflows</p></div>
+    <div class="trust"><strong>Human Approval</strong><p>Consequential actions stay controlled</p></div>
+    <div class="trust"><strong>Business Memory</strong><p>Long-term business context</p></div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="container">
+    <div class="section-title">
+      <h2>One AI system for your business</h2>
+      <p>From customer acquisition to operations, Business Doctor AI connects business intelligence with practical action.</p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="icon">🩺</div>
+        <h3>Business Diagnosis</h3>
+        <p>Identify business problems using available evidence, with confidence and source information instead of unsupported guesses.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">👥</div>
+        <h3>CRM & Customer Recovery</h3>
+        <p>Manage leads, customers, follow-ups, customer history and opportunities to recover missed business.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">📊</div>
+        <h3>Sales & Profit Intelligence</h3>
+        <p>Track sales, expenses, margins and operating profit when reliable data is available.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🤖</div>
+        <h3>AI Business Agents</h3>
+        <p>Business Analyst, Sales, Marketing, Booking, Customer Support, Lead Follow-up and Retention agents work from authorized business data.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">⚙️</div>
+        <h3>Automation Engine</h3>
+        <p>Create event-driven workflows for follow-ups, customer communication and other approved business processes.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🧠</div>
+        <h3>Business Memory</h3>
+        <p>Build a persistent understanding of your business from verified data and clearly identify missing information.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">📣</div>
+        <h3>Marketing Intelligence</h3>
+        <p>Generate practical campaigns, content ideas, offers and growth actions based on your business context.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">📦</div>
+        <h3>Products & Inventory</h3>
+        <p>Manage products, SKUs, stock levels and reorder signals with business-aware operational intelligence.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">📅</div>
+        <h3>Bookings & Services</h3>
+        <p>Support service businesses with bookings, capacity, customer information and appointment workflows.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="container">
+    <div class="section-title">
+      <h2>How Business Doctor AI works</h2>
+      <p>Your business becomes the source of truth for the AI.</p>
+    </div>
+
+    <div class="workflow">
+      <div class="step"><strong>01</strong><span>Connect Data</span></div>
+      <div class="step"><strong>02</strong><span>Understand Business</span></div>
+      <div class="step"><strong>03</strong><span>Find Problems</span></div>
+      <div class="step"><strong>04</strong><span>Recommend Actions</span></div>
+      <div class="step"><strong>05</strong><span>Approve Automation</span></div>
+      <div class="step"><strong>06</strong><span>Measure Results</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="security">
+  <div class="container">
+    <div class="section-title">
+      <h2>Built around business data privacy</h2>
+      <p>Business Doctor AI is designed so AI actions stay within the business context and authorized capabilities.</p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Tenant Isolation</h3>
+        <p>Business data is scoped to the authenticated business and protected by authorization controls.</p>
+      </div>
+
+      <div class="card">
+        <h3>Human-in-the-Loop</h3>
+        <p>Consequential actions require approval instead of silently sending messages, publishing content or spending money.</p>
+      </div>
+
+      <div class="card">
+        <h3>Evidence First</h3>
+        <p>When reliable information is unavailable, the system can state that there is insufficient data rather than inventing an answer.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="start">
+  <div class="container">
+    <div class="cta">
+      <h2>Your business. One intelligent operating system.</h2>
+      <p>
+        Understand your business, discover opportunities and turn insight into controlled action.
+      </p>
+      <a class="btn" href="mailto:hello@businessdoctorai.com">Contact Business Doctor AI</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer">
+    <div>© 2026 Business Doctor AI. All rights reserved.</div>
+    <div>AI-powered business intelligence for growing businesses.</div>
+  </div>
+</footer>
+
+</body>
+</html>
