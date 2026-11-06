@@ -1,228 +1,54 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Business Doctor AI — AI Business Operating System</title>
-  <meta name="description" content="Business Doctor AI helps small businesses understand their data, find problems, recover customers, automate workflows and grow with evidence-based AI.">
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{font-family:Arial,Helvetica,sans-serif;background:#07111f;color:#f5f7fb;line-height:1.6}
-    a{text-decoration:none;color:inherit}
-    .container{width:min(1120px,92%);margin:auto}
-    nav{position:sticky;top:0;z-index:10;background:rgba(7,17,31,.94);backdrop-filter:blur(12px);border-bottom:1px solid #1c2b40}
-    .nav{height:70px;display:flex;align-items:center;justify-content:space-between}
-    .logo{font-size:21px;font-weight:800;letter-spacing:-.5px}
-    .logo span{color:#6ea8ff}
-    .navlinks{display:flex;gap:25px;font-size:14px;color:#c6d0df}
-    .btn{display:inline-block;padding:13px 21px;border-radius:10px;background:#6ea8ff;color:#06101e;font-weight:700;border:0}
-    .btn.secondary{background:#14243a;color:#fff;border:1px solid #2b405c}
-    .hero{padding:95px 0 80px;text-align:center;background:radial-gradient(circle at 50% 0,#18365c 0,transparent 52%)}
-    .badge{display:inline-block;padding:7px 13px;border:1px solid #31547c;border-radius:30px;color:#9fc5ff;font-size:13px;margin-bottom:22px;background:#0c1b2e}
-    h1{font-size:clamp(42px,7vw,76px);line-height:1.03;letter-spacing:-3px;max-width:900px;margin:0 auto 24px}
-    .hero h1 span{color:#78adff}
-    .hero p{max-width:720px;margin:0 auto 30px;color:#bdc9d9;font-size:19px}
-    .actions{display:flex;justify-content:center;gap:13px;flex-wrap:wrap}
-    section{padding:78px 0}
-    .section-title{text-align:center;max-width:760px;margin:0 auto 45px}
-    .section-title h2{font-size:38px;letter-spacing:-1px;margin-bottom:12px}
-    .section-title p{color:#aebdce}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .card{background:#0d1a2b;border:1px solid #20334c;border-radius:16px;padding:25px}
-    .card h3{font-size:20px;margin-bottom:9px}
-    .card p{color:#aebdce;font-size:15px}
-    .icon{font-size:28px;margin-bottom:13px}
-    .workflow{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
-    .step{background:#0d1a2b;border:1px solid #20334c;border-radius:13px;padding:20px 12px;text-align:center}
-    .step strong{display:block;color:#78adff;margin-bottom:6px}
-    .step span{font-size:13px;color:#bdc9d9}
-    .trust{background:#0b1727;border-top:1px solid #1a2c43;border-bottom:1px solid #1a2c43}
-    .trustgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
-    .trust strong{font-size:18px}
-    .trust p{font-size:13px;color:#9eadbf;margin-top:5px}
-    .cta{background:linear-gradient(135deg,#102743,#0b1727);border:1px solid #294a70;border-radius:22px;padding:55px;text-align:center}
-    .cta h2{font-size:40px;margin-bottom:12px}
-    .cta p{color:#b8c6d7;margin-bottom:25px}
-    footer{border-top:1px solid #1c2b40;padding:35px 0;color:#91a1b5;font-size:13px}
-    .footer{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
-    @media(max-width:800px){
-      .navlinks{display:none}
-      .grid{grid-template-columns:1fr}
-      .workflow{grid-template-columns:repeat(2,1fr)}
-      .trustgrid{grid-template-columns:repeat(2,1fr)}
-      .hero{padding-top:70px}
-      .cta{padding:35px 22px}
-      .cta h2{font-size:31px}
-    }
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b10">
+<title>Business Doctor AI — Clarity. Control. Growth.</title>
+<meta name="description" content="An intelligent operating system for small businesses. Connect your operations, understand performance, find missed opportunities and take controlled action.">
+<style>
+:root{--bg:#090b10;--panel:#11151d;--panel2:#171d27;--gold:#d7b77a;--gold2:#f1d9a6;--text:#f5f1e9;--muted:#a6a8ad;--line:rgba(215,183,122,.2);--mint:#a6d5c2}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 50% -10%,#26303a 0,#0b0e14 43%,var(--bg) 75%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6;overflow-x:hidden}a{color:inherit;text-decoration:none}button{font:inherit}.wrap{width:min(1180px,90%);margin:auto}.grain{position:fixed;inset:0;pointer-events:none;z-index:20;opacity:.08;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E")}.glow{position:absolute;width:520px;height:520px;border-radius:50%;filter:blur(100px);opacity:.13;background:#c99b55;pointer-events:none}.topbar{position:sticky;top:0;z-index:15;background:rgba(9,11,16,.76);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.07)}nav{height:76px;display:flex;align-items:center;justify-content:space-between}.brand{font-size:18px;font-weight:750;letter-spacing:.02em}.brand b{color:var(--gold);font-weight:750}.brand small{display:block;color:#858991;font-size:9px;letter-spacing:.28em;text-transform:uppercase;margin-top:-4px}.links{display:flex;gap:28px;color:#b9bbc0;font-size:13px}.links a:hover{color:var(--gold2)}.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:13px 21px;border-radius:3px;background:linear-gradient(135deg,#f0d9a6,#bd9657);color:#17130d;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 9px 30px #c39b5730;transition:.3s;cursor:pointer;border:1px solid #f2d9a4}.btn:hover{transform:translateY(-3px);box-shadow:0 14px 38px #c39b5750}.btn.ghost{background:transparent;color:var(--text);border:1px solid #ffffff35;box-shadow:none}.eyebrow{color:var(--gold);font-size:10px;letter-spacing:.28em;text-transform:uppercase;font-weight:800}.hero{min-height:760px;display:grid;align-items:center;position:relative;padding:95px 0 110px;overflow:hidden}.heroGrid{display:grid;grid-template-columns:1.02fr .98fr;align-items:center;gap:35px}.hero h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(48px,6vw,82px);line-height:1.02;letter-spacing:-.045em;margin:22px 0}.hero h1 em{font-style:italic;color:var(--gold2)}.hero p{color:#b4b6bc;font-size:16px;max-width:570px}.heroActions{display:flex;gap:13px;flex-wrap:wrap;margin:30px 0}.micro{font-size:11px;color:#858991;letter-spacing:.04em}.visual{height:540px;position:relative;perspective:1100px;display:grid;place-items:center}.orbit{position:absolute;width:410px;height:410px;border:1px solid #d6b77836;border-radius:50%;transform:rotateX(67deg) rotateZ(-20deg);box-shadow:0 0 80px #d6b7780b,inset 0 0 50px #d6b7780b}.orbit:before,.orbit:after{content:"";position:absolute;inset:28px;border:1px solid #d6b77824;border-radius:50%}.orbit:after{inset:-35px}.core{width:245px;height:300px;position:relative;transform-style:preserve-3d;transform:rotateY(-18deg) rotateX(8deg);animation:float 7s ease-in-out infinite}.coreFace{position:absolute;inset:0;border:1px solid #d7b77a88;border-radius:18px;background:linear-gradient(145deg,#30323a,#141922 48%,#0d1118);box-shadow:25px 35px 65px #000b,inset 1px 1px 0 #fff2,inset -1px -1px 0 #d7b77a35;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:translateZ(30px);backdrop-filter:blur(15px)}.coreFace:before{content:"";position:absolute;inset:12px;border:1px solid #d7b77a35;border-radius:10px}.medical{font-size:62px;color:var(--gold2);text-shadow:0 0 30px #d7b77a75}.coreFace strong{font-family:Georgia,serif;font-size:22px;font-weight:400;margin-top:14px}.coreFace span{font-size:9px;letter-spacing:.28em;color:var(--gold);margin-top:5px}.side{position:absolute;width:60px;height:300px;top:0;background:linear-gradient(90deg,#8b6d3c,#1b1d23);border:1px solid #d7b77a70;transform:rotateY(90deg) translateZ(-30px) translateX(30px);transform-origin:left;opacity:.85}.floatCard{position:absolute;padding:14px 17px;background:linear-gradient(145deg,#202630dd,#10151ddd);border:1px solid #d7b77a45;border-radius:9px;box-shadow:0 20px 45px #0008;backdrop-filter:blur(12px);transform:translateZ(65px);font-size:11px}.floatCard b{display:block;color:var(--gold2);font-size:13px;margin-bottom:3px}.fc1{top:70px;right:0;animation:float 6s ease-in-out infinite}.fc2{bottom:75px;left:-5px;animation:float 7s ease-in-out -2s infinite}.fc3{bottom:25px;right:15px;animation:float 8s ease-in-out -3s infinite}.spark{position:absolute;width:6px;height:6px;background:var(--gold2);border-radius:50%;box-shadow:0 0 20px 5px #d7b77a80}.s1{top:18%;left:22%}.s2{bottom:20%;right:12%}@keyframes float{0%,100%{translate:0 0;rotate:0deg}50%{translate:0 -13px;rotate:1deg}}.ticker{border-block:1px solid #ffffff12;background:#ffffff04;overflow:hidden}.tickerIn{display:flex;justify-content:space-around;gap:30px;padding:20px 0;flex-wrap:wrap;color:#c2b18f;font-size:10px;letter-spacing:.2em;text-transform:uppercase}.ticker span:before{content:"✦";color:var(--gold);margin-right:12px}.section{padding:110px 0;position:relative}.sectionHead{max-width:720px;margin-bottom:48px}.sectionHead.center{text-align:center;margin:0 auto 55px}.sectionHead h2{font:400 clamp(36px,4.5vw,58px)/1.1 Georgia,serif;letter-spacing:-.035em;margin:15px 0}.sectionHead h2 em{color:var(--gold2)}.sectionHead p{color:var(--muted);font-size:15px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}.feature{min-height:230px;padding:28px;background:linear-gradient(145deg,#1a202a,#0f131a);border:1px solid #ffffff12;position:relative;transform-style:preserve-3d;transition:transform .25s,border-color .25s;box-shadow:0 20px 40px #0003}.feature:hover{border-color:#d7b77a77;box-shadow:0 25px 55px #0007,0 0 30px #d7b77a0a}.num{font:italic 13px Georgia;color:var(--gold)}.ico{font-size:25px;margin:15px 0;color:var(--gold2)}.feature h3{font:400 23px Georgia,serif;margin:5px 0 9px}.feature p{font-size:13px;color:#a9adb5;margin:0}.feature .tag{position:absolute;right:22px;top:24px;font-size:9px;color:#828791;letter-spacing:.15em;text-transform:uppercase}.darkBand{background:linear-gradient(120deg,#171b22,#0d1118 55%,#19160f);border-block:1px solid #ffffff10}.problemGrid{display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:center}.problemList{display:grid;gap:13px}.problem{display:flex;gap:15px;padding:17px 18px;border:1px solid #ffffff12;background:#ffffff05}.problem i{color:#d6b778;font-style:normal;font-size:18px}.problem b{display:block;font-size:14px;font-weight:650}.problem span{display:block;color:#9ea3ac;font-size:12px}.console{padding:26px;background:linear-gradient(145deg,#222832,#10141b);border:1px solid #d7b77a4a;border-radius:12px;box-shadow:22px 30px 70px #0008;transform:perspective(1000px) rotateY(-7deg) rotateX(3deg);transition:.4s}.console:hover{transform:perspective(1000px) rotateY(0) rotateX(0) translateY(-5px)}.consoleTop{display:flex;justify-content:space-between;border-bottom:1px solid #ffffff15;padding-bottom:17px;color:#c8cbd0;font-size:11px}.live{color:var(--mint)}.metricGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}.metric{padding:17px;background:#090d13;border:1px solid #ffffff10}.metric small{color:#9299a3;font-size:10px}.metric strong{display:block;font:28px Georgia;color:var(--gold2);margin:5px 0}.metric em{font-style:normal;font-size:10px;color:var(--mint)}.chart{height:125px;display:flex;align-items:end;gap:8px;padding:15px 8px 0;border-bottom:1px solid #ffffff22;margin-top:18px}.bar{flex:1;background:linear-gradient(0deg,#80643c,#e1c58c);border-radius:3px 3px 0 0;opacity:.85;box-shadow:0 0 20px #d7b77a20}.disclaimer{font-size:10px;color:#777f89;margin-top:12px}.modules{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.module{padding:23px 20px;border:1px solid #ffffff13;background:linear-gradient(145deg,#171d26,#0d1117);min-height:175px;transition:.3s}.module:hover{transform:translateY(-6px);border-color:#d7b77a66}.module .ico{margin:0 0 14px}.module h3{font:400 18px Georgia;margin:0 0 7px}.module p{font-size:11px;color:#9ea4ad;margin:0}.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative}.steps:before{content:"";position:absolute;top:25px;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,#d7b77a88,transparent)}.step{text-align:center;padding:0 15px;position:relative}.stepNum{width:50px;height:50px;margin:0 auto 20px;border-radius:50%;display:grid;place-items:center;background:#171c24;border:1px solid #d7b77a88;color:var(--gold2);box-shadow:0 0 0 8px #0b0e13;font:18px Georgia}.step h3{font:400 19px Georgia}.step p{font-size:11px;color:#9ea4ad}.growth{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}.growthPanel{padding:30px;background:linear-gradient(145deg,#1d242e,#10141a);border:1px solid #d7b77a55;box-shadow:20px 25px 60px #0008;transform:perspective(1000px) rotateY(5deg)}.growthRow{padding:15px 0;border-bottom:1px solid #ffffff13;display:flex;justify-content:space-between;gap:12px;font-size:12px}.growthRow span{color:#a5aab2}.growthRow b{color:var(--gold2);font-weight:600;text-align:right}.growthNote{font-size:10px;color:#7e858e;margin-top:16px}.quote{font:italic 25px/1.35 Georgia;color:#e8d9bc;border-left:2px solid var(--gold);padding-left:22px;margin:25px 0}.securityGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.secure{padding:25px;border:1px solid #ffffff12;background:#111720}.secure h3{font:400 19px Georgia;margin:12px 0 7px}.secure p{font-size:12px;color:#9ea4ad}.finalCta{text-align:center;padding:80px 25px;border:1px solid #d7b77a55;background:radial-gradient(ellipse at 50% 0,#463b27 0,#171912 36%,#10131a 78%);box-shadow:0 30px 90px #0008;position:relative;overflow:hidden}.finalCta h2{font:400 clamp(38px,5vw,62px)/1.08 Georgia;margin:16px auto;max-width:780px}.finalCta p{color:#b2b4b9;max-width:620px;margin:0 auto 28px}.foot{padding:35px 0;border-top:1px solid #ffffff12;color:#858b95;font-size:11px}.footIn{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.reveal{opacity:0;transform:translateY(25px);transition:opacity .8s,transform .8s}.reveal.visible{opacity:1;transform:translateY(0)}.mobileMenu{display:none}
+@media(max-width:850px){.links{display:none}.hero{padding:70px 0}.heroGrid,.problemGrid,.growth{grid-template-columns:1fr}.visual{height:440px;order:-1}.core{scale:.82}.fc1{right:2%}.fc2{left:2%}.grid3{grid-template-columns:repeat(2,1fr)}.modules{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:1fr;gap:25px}.steps:before{display:none}.step{display:grid;grid-template-columns:50px 1fr;text-align:left;column-gap:15px;padding:0}.stepNum{grid-row:span 2;margin:0}.step h3{margin:0}.step p{margin:2px 0}.console,.growthPanel{transform:none}.securityGrid{grid-template-columns:1fr}.section{padding:80px 0}}
+@media(max-width:540px){.wrap{width:89%}nav{height:66px}.brand{font-size:15px}.topbar .btn{padding:10px 12px;font-size:9px}.hero h1{font-size:49px}.hero p{font-size:14px}.visual{height:360px;scale:.9;margin:-10px -20px}.orbit{width:300px;height:300px}.core{scale:.72}.fc1,.fc2,.fc3{font-size:9px;padding:10px}.grid3{grid-template-columns:1fr}.feature{min-height:190px}.modules{grid-template-columns:1fr 1fr}.module{padding:17px 14px}.module h3{font-size:16px}.metric strong{font-size:23px}.sectionHead h2{font-size:39px}.tickerIn{justify-content:flex-start;gap:24px}.finalCta{padding:60px 20px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
 </head>
-<body>
-
-<nav>
-  <div class="container nav">
-    <div class="logo">Business <span>Doctor AI</span></div>
-    <div class="navlinks">
-      <a href="#features">Features</a>
-      <a href="#how">How it works</a>
-      <a href="#security">Security</a>
-    </div>
-    <a class="btn" href="#start">Get Started</a>
-  </div>
-</nav>
-
-<header class="hero">
-  <div class="container">
-    <div class="badge">AI-Powered Business Operating System</div>
-    <h1>Turn your business data into <span>clear actions.</span></h1>
-    <p>
-      Business Doctor AI helps small businesses understand what is happening,
-      find real problems, recover opportunities, automate workflows and build
-      practical growth plans using evidence from their business data.
-    </p>
-    <div class="actions">
-      <a class="btn" href="#start">Start Your Business Journey</a>
-      <a class="btn secondary" href="#features">Explore Features</a>
-    </div>
-  </div>
-</header>
-
-<section class="trust">
-  <div class="container trustgrid">
-    <div class="trust"><strong>Evidence-Based</strong><p>No invented business metrics</p></div>
-    <div class="trust"><strong>AI Agents</strong><p>Specialized business workflows</p></div>
-    <div class="trust"><strong>Human Approval</strong><p>Consequential actions stay controlled</p></div>
-    <div class="trust"><strong>Business Memory</strong><p>Long-term business context</p></div>
-  </div>
-</section>
-
-<section id="features">
-  <div class="container">
-    <div class="section-title">
-      <h2>One AI system for your business</h2>
-      <p>From customer acquisition to operations, Business Doctor AI connects business intelligence with practical action.</p>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <div class="icon">🩺</div>
-        <h3>Business Diagnosis</h3>
-        <p>Identify business problems using available evidence, with confidence and source information instead of unsupported guesses.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">👥</div>
-        <h3>CRM & Customer Recovery</h3>
-        <p>Manage leads, customers, follow-ups, customer history and opportunities to recover missed business.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">📊</div>
-        <h3>Sales & Profit Intelligence</h3>
-        <p>Track sales, expenses, margins and operating profit when reliable data is available.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">🤖</div>
-        <h3>AI Business Agents</h3>
-        <p>Business Analyst, Sales, Marketing, Booking, Customer Support, Lead Follow-up and Retention agents work from authorized business data.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">⚙️</div>
-        <h3>Automation Engine</h3>
-        <p>Create event-driven workflows for follow-ups, customer communication and other approved business processes.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">🧠</div>
-        <h3>Business Memory</h3>
-        <p>Build a persistent understanding of your business from verified data and clearly identify missing information.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">📣</div>
-        <h3>Marketing Intelligence</h3>
-        <p>Generate practical campaigns, content ideas, offers and growth actions based on your business context.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">📦</div>
-        <h3>Products & Inventory</h3>
-        <p>Manage products, SKUs, stock levels and reorder signals with business-aware operational intelligence.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">📅</div>
-        <h3>Bookings & Services</h3>
-        <p>Support service businesses with bookings, capacity, customer information and appointment workflows.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="how">
-  <div class="container">
-    <div class="section-title">
-      <h2>How Business Doctor AI works</h2>
-      <p>Your business becomes the source of truth for the AI.</p>
-    </div>
-
-    <div class="workflow">
-      <div class="step"><strong>01</strong><span>Connect Data</span></div>
-      <div class="step"><strong>02</strong><span>Understand Business</span></div>
-      <div class="step"><strong>03</strong><span>Find Problems</span></div>
-      <div class="step"><strong>04</strong><span>Recommend Actions</span></div>
-      <div class="step"><strong>05</strong><span>Approve Automation</span></div>
-      <div class="step"><strong>06</strong><span>Measure Results</span></div>
-    </div>
-  </div>
-</section>
-
-<section id="security">
-  <div class="container">
-    <div class="section-title">
-      <h2>Built around business data privacy</h2>
-      <p>Business Doctor AI is designed so AI actions stay within the business context and authorized capabilities.</p>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <h3>Tenant Isolation</h3>
-        <p>Business data is scoped to the authenticated business and protected by authorization controls.</p>
-      </div>
-
-      <div class="card">
-        <h3>Human-in-the-Loop</h3>
-        <p>Consequential actions require approval instead of silently sending messages, publishing content or spending money.</p>
-      </div>
-
-      <div class="card">
-        <h3>Evidence First</h3>
-        <p>When reliable information is unavailable, the system can state that there is insufficient data rather than inventing an answer.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="start">
-  <div class="container">
-    <div class="cta">
-      <h2>Your business. One intelligent operating system.</h2>
-      <p>
-        Understand your business, discover opportunities and turn insight into controlled action.
-      </p>
-      <a class="btn" href="mailto:hello@businessdoctorai.com">Contact Business Doctor AI</a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="container footer">
-    <div>© 2026 Business Doctor AI. All rights reserved.</div>
-    <div>AI-powered business intelligence for growing businesses.</div>
-  </div>
-</footer>
-
-</body>
-</html>
+<body><div class="grain"></div>
+<div class="topbar"><nav class="wrap"><a class="brand" href="#">BUSINESS <b>DOCTOR AI</b><small>Business operating intelligence</small></a><div class="links"><a href="#problems">What it solves</a><a href="#platform">Platform</a><a href="#workflow">How it works</a><a href="#growth">Business impact</a></div><a class="btn" href="#platform">Explore the system ↗</a></nav></div>
+<header class="hero"><div class="glow" style="top:0;right:-180px"></div><div class="wrap heroGrid"><div class="reveal"><div class="eyebrow">The intelligence layer for ambitious businesses</div><h1>Your business.<br>In <em>clear control.</em></h1><p>One intelligent operating system to connect your business, understand what is really happening, uncover missed opportunities and turn insight into controlled action.</p><div class="heroActions"><a class="btn" href="#platform">Discover the platform <span>↗</span></a><a class="btn ghost" href="#workflow">See how it works</a></div><div class="micro">Built for Indian small businesses · Evidence-led · Human-approved actions</div></div><div class="visual reveal" id="heroVisual"><div class="orbit"></div><div class="core"><div class="coreFace"><div class="medical">✣</div><strong>Business Doctor</strong><span>INTELLIGENCE SYSTEM</span></div><div class="side"></div><div class="floatCard fc1"><b>Business diagnosis</b>Find what needs attention</div><div class="floatCard fc2"><b>Growth opportunities</b>Turn signals into next steps</div><div class="floatCard fc3"><b>Owner controlled</b>Approve before action</div></div><i class="spark s1"></i><i class="spark s2"></i></div></div></header>
+<div class="ticker"><div class="wrap tickerIn"><span>One business brain</span><span>Connected operations</span><span>Evidence before advice</span><span>Controlled automation</span><span>Built to scale with you</span></div></div>
+<section class="section" id="problems"><div class="wrap problemGrid"><div class="sectionHead reveal"><div class="eyebrow">The everyday business challenge</div><h2>Running a business shouldn't mean <em>running blind.</em></h2><p>Important information is often scattered across notebooks, spreadsheets, WhatsApp, social media and separate apps. That makes it harder to see the full picture and act at the right time.</p><div class="quote">“Less guesswork. A clearer view of what deserves your attention.”</div></div><div class="problemList reveal"><div class="problem"><i>◈</i><div><b>You don't know what is really driving sales</b><span>Bring available sales, customer and product information into one view.</span></div></div><div class="problem"><i>◈</i><div><b>Leads and customers slip through the cracks</b><span>Organise enquiries, follow-ups, customer history and recovery opportunities.</span></div></div><div class="problem"><i>◈</i><div><b>Marketing feels random and disconnected</b><span>Plan business-specific campaigns and track results when channel data is connected.</span></div></div><div class="problem"><i>◈</i><div><b>Stock, bookings and daily work are hard to coordinate</b><span>Connect operational workflows and highlight issues using the data available.</span></div></div><div class="problem"><i>◈</i><div><b>Advice is easy to get; execution is harder</b><span>Turn recommendations into reviewable tasks with owner approval at important steps.</span></div></div></div></div></section>
+<section class="section darkBand" id="platform"><div class="wrap"><div class="sectionHead center reveal"><div class="eyebrow">One platform. Connected intelligence.</div><h2>Meet your business's <em>operating brain.</em></h2><p>Business Doctor AI is designed to connect the signals, workflows and decisions that shape a small business—not add another disconnected tool.</p></div><div class="grid3">
+<div class="feature reveal"><span class="num">01 / INSIGHT</span><span class="tag">Understand</span><div class="ico">⌁</div><h3>Business Diagnosis</h3><p>Surface performance gaps, unusual patterns and operational issues from verified business information, with context and data limitations.</p></div>
+<div class="feature reveal"><span class="num">02 / CUSTOMERS</span><span class="tag">Retain</span><div class="ico">♧</div><h3>CRM & Customer Recovery</h3><p>Organise leads, customer profiles, enquiries, follow-up status and repeat-business opportunities in one place.</p></div>
+<div class="feature reveal"><span class="num">03 / MONEY</span><span class="tag">Measure</span><div class="ico">◉</div><h3>Sales & Profit Intelligence</h3><p>Understand sales, expenses, product margins and operating performance when complete, reliable records are connected.</p></div>
+<div class="feature reveal"><span class="num">04 / MARKETING</span><span class="tag">Attract</span><div class="ico">✳</div><h3>Marketing Intelligence Engine</h3><p>Build business-specific content plans, offers, campaigns and customer reactivation ideas—not generic posting calendars.</p></div>
+<div class="feature reveal"><span class="num">05 / AUTOMATION</span><span class="tag">Coordinate</span><div class="ico">⟲</div><h3>Workflow Automation</h3><p>Design follow-ups, reminders and repeatable workflows. High-impact communication and publishing remain approval-controlled.</p></div>
+<div class="feature reveal"><span class="num">06 / AI AGENTS</span><span class="tag">Assist</span><div class="ico">✧</div><h3>Specialist AI Agents</h3><p>Business analyst, sales, marketing, booking and customer-support workflows working from authorised business context.</p></div>
+<div class="feature reveal"><span class="num">07 / OPERATIONS</span><span class="tag">Organise</span><div class="ico">▦</div><h3>Products & Inventory</h3><p>Maintain product and service catalogues, stock information and reorder signals where inventory data is available.</p></div>
+<div class="feature reveal"><span class="num">08 / SERVICES</span><span class="tag">Schedule</span><div class="ico">◷</div><h3>Bookings & Appointments</h3><p>Support service businesses with booking records, appointment workflows, customer details and capacity visibility.</p></div>
+<div class="feature reveal"><span class="num">09 / MEMORY</span><span class="tag">Learn</span><div class="ico">⌘</div><h3>Business Memory & Reports</h3><p>Keep business context organised, explain what the system knows and clearly flag missing information instead of inventing answers.</p></div>
+</div></div></section>
+<section class="section"><div class="wrap growth"><div class="sectionHead reveal"><div class="eyebrow">From scattered data to decisions</div><h2>See the business behind <em>the numbers.</em></h2><p>Bring connected information into a shared workspace. Understand the signals, identify what needs attention and decide what to do next.</p><p>As more reliable data becomes available, the system can provide a more complete view—without pretending to know what has not been measured.</p></div><div class="console reveal"><div class="consoleTop"><span>BUSINESS OVERVIEW · CONCEPT PREVIEW</span><span class="live">● ILLUSTRATIVE UI</span></div><div class="metricGrid"><div class="metric"><small>Sales visibility</small><strong>Connected</strong><em>When sales data is linked</em></div><div class="metric"><small>Customer follow-up</small><strong>Organised</strong><em>From recorded lead status</em></div><div class="metric"><small>Marketing activity</small><strong>Trackable</strong><em>With channel integration</em></div><div class="metric"><small>Business insights</small><strong>Evidence-led</strong><em>Source-aware recommendations</em></div></div><div class="chart"><i class="bar" style="height:32%"></i><i class="bar" style="height:48%"></i><i class="bar" style="height:42%"></i><i class="bar" style="height:65%"></i><i class="bar" style="height:53%"></i><i class="bar" style="height:78%"></i><i class="bar" style="height:88%"></i><i class="bar" style="height:72%"></i></div><div class="disclaimer">Illustrative interface only—not live customer data, measured results or a growth guarantee.</div></div></div></section>
+<section class="section darkBand"><div class="wrap"><div class="sectionHead center reveal"><div class="eyebrow">Designed around real business workflows</div><h2>One connected system for <em>everyday work.</em></h2><p>Start with the workflows your business needs. Expand as your data and integrations grow.</p></div><div class="modules">
+<div class="module reveal"><div class="ico">◉</div><h3>Lead capture</h3><p>Bring enquiries from connected channels into an organised pipeline.</p></div><div class="module reveal"><div class="ico">↗</div><h3>Follow-up desk</h3><p>Track who needs a response and what action is due.</p></div><div class="module reveal"><div class="ico">✦</div><h3>Campaign studio</h3><p>Plan offers and content around your products and customers.</p></div><div class="module reveal"><div class="ico">▤</div><h3>Content planning</h3><p>Prepare platform-specific ideas, captions and creative briefs.</p></div><div class="module reveal"><div class="ico">♡</div><h3>Feedback insights</h3><p>Organise customer feedback and recurring service issues.</p></div><div class="module reveal"><div class="ico">◷</div><h3>Booking workflow</h3><p>Keep appointments and service enquiries in view.</p></div><div class="module reveal"><div class="ico">▦</div><h3>Stock awareness</h3><p>Review catalogue and stock signals from connected records.</p></div><div class="module reveal"><div class="ico">⌁</div><h3>Owner reports</h3><p>Review evidence, decisions, pending approvals and outcomes.</p></div></div></div></section>
+<section class="section" id="workflow"><div class="wrap"><div class="sectionHead center reveal"><div class="eyebrow">A practical path to clarity</div><h2>How it works, <em>step by step.</em></h2><p>Business Doctor AI is designed to learn your business before it recommends action.</p></div><div class="steps">
+<div class="step reveal"><div class="stepNum">01</div><h3>Connect</h3><p>Add business details and connect available records or channels.</p></div><div class="step reveal"><div class="stepNum">02</div><h3>Understand</h3><p>Build a structured picture of customers, products and operations.</p></div><div class="step reveal"><div class="stepNum">03</div><h3>Diagnose</h3><p>Identify supported issues, gaps and potential opportunities.</p></div><div class="step reveal"><div class="stepNum">04</div><h3>Decide</h3><p>Review practical recommendations, evidence and expected trade-offs.</p></div><div class="step reveal"><div class="stepNum">05</div><h3>Approve & learn</h3><p>Approve permitted actions and measure outcomes from real data.</p></div></div></div></section>
+<section class="section darkBand" id="growth"><div class="wrap growth"><div class="sectionHead reveal"><div class="eyebrow">What better visibility can unlock</div><h2>Build the conditions for <em>measurable growth.</em></h2><p>Business Doctor AI is designed to help owners focus on the levers that can influence business performance. Actual outcomes depend on your market, offer, execution, data quality and customer response.</p><div class="quote">The goal isn't a magic growth number. It's better decisions, consistent execution and results you can actually measure.</div></div><div class="growthPanel reveal"><div class="eyebrow">Potential business levers</div><div class="growthRow"><span>Faster lead response</span><b>Fewer missed enquiries</b></div><div class="growthRow"><span>Consistent follow-up</span><b>More chances to convert</b></div><div class="growthRow"><span>Customer reactivation</span><b>More repeat-visit opportunities</b></div><div class="growthRow"><span>Margin-aware promotion</span><b>Smarter offer selection</b></div><div class="growthRow"><span>Stock & booking visibility</span><b>Better daily coordination</b></div><div class="growthRow"><span>Performance tracking</span><b>Learn what is working</b></div><p class="growthNote">These are possible mechanisms of improvement, not guaranteed outcomes or measured customer results. No fixed revenue, profit or growth percentage is promised.</p></div></div></section>
+<section class="section"><div class="wrap"><div class="sectionHead center reveal"><div class="eyebrow">Trust is part of the product</div><h2>Intelligence with <em>owner control.</em></h2></div><div class="securityGrid"><div class="secure reveal"><div class="ico">◇</div><h3>Evidence before claims</h3><p>Recommendations should be grounded in available records. Missing information is identified rather than filled with invented numbers.</p></div><div class="secure reveal"><div class="ico">⌑</div><h3>Business-level privacy</h3><p>Designed for authenticated access and separation of each business's information and connected accounts.</p></div><div class="secure reveal"><div class="ico">✓</div><h3>Human approval</h3><p>Publishing, paid campaigns and other consequential actions should require explicit owner approval and defined limits.</p></div></div></div></section>
+<section class="section"><div class="wrap"><div class="finalCta reveal"><div class="eyebrow">A more intentional way to run your business</div><h2>Don't just manage the business. <em style="color:var(--gold2)">Understand it.</em></h2><p>Business Doctor AI brings business intelligence, customer workflows and controlled action into one operating vision—built to grow with your business.</p><a class="btn" href="mailto:hello@businessdoctorai.com?subject=Business%20Doctor%20AI%20Enquiry">Contact the team ↗</a></div></div></section>
+<footer class="foot"><div class="wrap footIn"><div><b style="color:#e7d4ae">BUSINESS DOCTOR AI</b><br>Business operating intelligence for growing businesses.</div><div>© 2026 Business Doctor AI. All rights reserved.</div></div></footer>
+<script>
+const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+const visual=document.getElementById('heroVisual');
+if(visual && matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+ visual.addEventListener('pointermove',e=>{const r=visual.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;const core=visual.querySelector('.core');core.style.transform='rotateY('+(-18+x*18)+'deg) rotateX('+(8-y*12)+'deg)'});
+ visual.addEventListener('pointerleave',()=>{visual.querySelector('.core').style.transform='rotateY(-18deg) rotateX(8deg)'});
+}
+document.querySelectorAll('.feature').forEach(card=>{
+ if(!matchMedia('(pointer:fine)').matches)return;
+ card.addEventListener('pointermove',e=>{const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;card.style.transform='perspective(700px) rotateY('+(x*5)+'deg) rotateX('+(-y*5)+'deg) translateY(-3px)'});
+ card.addEventListener('pointerleave',()=>card.style.transform='');
+});
+</script></body></html>
