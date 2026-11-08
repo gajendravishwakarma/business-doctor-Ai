@@ -61,6 +61,28 @@ body{perspective:1400px}
 #accountPanel{box-shadow:0 30px 90px #0009,0 0 0 1px #d7b77a16,inset 0 1px #ffffff18}
 @media(max-width:850px){.hero{min-height:auto}.core{animation-duration:10s}.feature,.module,.secure{transform:none!important}}
 @media(prefers-reduced-motion:reduce){.hero:after,.core{animation:none!important}.feature:before,.module:before,.secure:before{display:none}}
+
+/* Lightweight 4D-inspired polish: motion, depth and light over time */
+.hero:after{animation:heroAtmosphere 20s ease-in-out infinite alternate}
+.core{animation:coreDrift 12s ease-in-out infinite;will-change:transform}
+.floatCard,.holoPanel{box-shadow:0 16px 38px #0009,0 0 18px #d7b77a12,inset 0 1px #ffffff18}
+.feature,.module,.secure,.problem,.growthPanel,.console,.finalCta{transition:transform .28s ease,border-color .28s,box-shadow .28s}
+@media(max-width:850px){
+ body:before{animation:none!important}
+ .hero:after{animation:none!important}
+ .core{animation:coreDrift 18s ease-in-out infinite;will-change:auto}
+ .floatCard,.holoPanel{box-shadow:0 10px 22px #0008,inset 0 1px #ffffff14}
+ .feature,.module,.secure,.problem,.growthPanel,.console,.finalCta{transform:none!important;transition:border-color .2s}
+ .feature:before,.module:before,.secure:before{display:none}
+ #starfield{display:none}
+}
+@media(max-width:480px){
+ .core{animation:none!important}
+ .floatCard,.holoPanel{box-shadow:0 8px 18px #0007}
+}
+@media(prefers-reduced-motion:reduce){
+ .hero:after,.core,body:before{animation:none!important}
+}
 </style>
 </head>
 <body><canvas id="starfield" aria-hidden="true"></canvas><div class="scrollProgress" id="scrollProgress"></div><div class="grain"></div>
@@ -129,14 +151,10 @@ bdAuthForm.addEventListener("submit",async e=>{e.preventDefault();const payload=
 bdBusinessForm.addEventListener("submit",async e=>{e.preventDefault();if(!bdSession?.access_token){bdMessage("Session expire ho gaya. Dobara login karein.");return;}const payload={name:document.getElementById("bdBusinessName").value,businessType:document.getElementById("bdType").value,phone:document.getElementById("bdPhone").value,websiteUrl:document.getElementById("bdWebsite").value,businessStage:document.getElementById("bdStage").value,dataMaturity:document.getElementById("bdMaturity").value,ownerName:document.getElementById("bdName").value,email:document.getElementById("bdEmail").value};bdMessage("Business workspace create ho raha hai...");try{const r=await fetch(BD_API+"/api/business/onboard",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+bdSession.access_token},body:JSON.stringify(payload)});const d=await r.json();if(!r.ok||!d.success)throw new Error(d.message||"Business create nahi hua");bdMessage("Business workspace ban gaya: "+d.business.name+". Ab WhatsApp connection next step hai.");bdBusinessForm.style.display="none";}catch(err){bdMessage(err.message||"Business create nahi ho paya.");}});
 document.getElementById("bdLogout").addEventListener("click",()=>{bdSession=null;bdAuthForm.reset();bdBusinessForm.reset();bdAuthForm.style.display="block";bdBusinessForm.style.display="none";document.getElementById("bdMode").style.display="inline-flex";document.getElementById("bdLogout").style.display="none";bdMessage("Logged out. Password/token browser me save nahi kiya gaya.");});
 
-/* Subtle spatial pointer response and scroll-time depth. Disabled for touch/reduced motion. */
-(()=>{const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;const fine=matchMedia('(pointer:fine)').matches;if(reduce)return;
-if(fine){document.querySelectorAll('.feature,.module,.secure,.problem,.growthPanel,.console').forEach(card=>{
-card.addEventListener('pointermove',e=>{const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;card.style.transform='perspective(950px) rotateY('+(x*4)+'deg) rotateX('+(-y*4)+'deg) translateY(-3px)';});
+/* Lightweight spatial depth: pointer-only on capable devices; no scroll loop. */
+(()=>{const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;const fine=matchMedia('(pointer:fine)').matches;if(reduce||!fine)return;
+document.querySelectorAll('.feature,.module,.secure').forEach(card=>{
+card.addEventListener('pointermove',e=>{const r=card.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;card.style.transform='perspective(850px) rotateY('+(x*3)+'deg) rotateX('+(-y*3)+'deg) translateY(-2px)';},{passive:true});
 card.addEventListener('pointerleave',()=>{card.style.transform='';});
-});}
-const sections=[...document.querySelectorAll('.section')];let ticking=false;
-const depthOnScroll=()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{const vh=innerHeight;sections.forEach(el=>{const r=el.getBoundingClientRect(),mid=r.top+r.height/2,delta=(mid-vh/2)/(vh/2);el.style.setProperty('--section-depth',Math.max(-1,Math.min(1,delta)).toFixed(2));});ticking=false;});};
-addEventListener('scroll',depthOnScroll,{passive:true});depthOnScroll();
-})();
-</script></body></html>
+});
+})();</script></body></html>
