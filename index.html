@@ -83,6 +83,22 @@ body{perspective:1400px}
 @media(prefers-reduced-motion:reduce){
  .hero:after,.core,body:before{animation:none!important}
 }
+
+/* Animated polish: restrained motion, staged reveals and a living primary action */
+@keyframes ctaBreath{0%,100%{box-shadow:0 8px 24px #d7b77a18,0 0 0 0 #d7b77a00}50%{box-shadow:0 12px 32px #d7b77a30,0 0 0 5px #d7b77a0b}}
+.heroActions .btn:first-child{animation:ctaBreath 5s ease-in-out infinite}
+.reveal{transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.25,1)}
+.feature.visible,.module.visible,.step.visible{animation:softArrive .55s both}
+@keyframes softArrive{from{opacity:.75;translate:0 8px}to{opacity:1;translate:0 0}}
+@media(max-width:700px){
+ .heroActions .btn:first-child{animation:none}
+ .reveal{transition-duration:.38s}
+ .feature.visible,.module.visible,.step.visible{animation:none}
+}
+@media(prefers-reduced-motion:reduce){
+ .heroActions .btn:first-child,.feature.visible,.module.visible,.step.visible{animation:none!important}
+ .reveal{transition:none!important}
+}
 </style>
 </head>
 <body><canvas id="starfield" aria-hidden="true"></canvas><div class="scrollProgress" id="scrollProgress"></div><div class="grain"></div>
@@ -122,9 +138,13 @@ const updateProgress=()=>{const max=document.documentElement.scrollHeight-innerH
 addEventListener('scroll',updateProgress,{passive:true});updateProgress();
 const canvas=document.getElementById('starfield'),ctx=canvas.getContext('2d');
 let stars=[],sw=0,sh=0,raf=0;
-function resizeStars(){const dpr=Math.min(devicePixelRatio||1,1.6);sw=innerWidth;sh=innerHeight;canvas.width=sw*dpr;canvas.height=sh*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);stars=Array.from({length:Math.min(85,Math.floor(sw/15))},()=>({x:Math.random()*sw,y:Math.random()*sh,z:.3+Math.random()*.8,r:.4+Math.random()*1.1,p:Math.random()*6.28}))}
-function drawStars(){ctx.clearRect(0,0,sw,sh);for(const s of stars){s.p+=.008*s.z;const a=.15+(Math.sin(s.p)+1)*.22;ctx.beginPath();ctx.arc(s.x,s.y,s.r*s.z,0,Math.PI*2);ctx.fillStyle='rgba(235,211,164,'+a+')';ctx.fill()}raf=requestAnimationFrame(drawStars)}
-if(!matchMedia('(prefers-reduced-motion: reduce)').matches){resizeStars();drawStars();addEventListener('resize',resizeStars,{passive:true})}
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const compact=matchMedia('(max-width: 700px)').matches;
+function resizeStars(){const dpr=Math.min(devicePixelRatio||1,compact?1:1.25);sw=innerWidth;sh=innerHeight;canvas.width=Math.round(sw*dpr);canvas.height=Math.round(sh*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);const count=compact?Math.min(22,Math.floor(sw/18)):Math.min(55,Math.floor(sw/18));stars=Array.from({length:count},()=>({x:Math.random()*sw,y:Math.random()*sh,z:.3+Math.random()*.8,r:.4+Math.random()*.9,p:Math.random()*6.28}))}
+function drawStars(){if(document.hidden){raf=0;return}ctx.clearRect(0,0,sw,sh);for(const s of stars){s.p+=compact?.004:.006*s.z;const a=.12+(Math.sin(s.p)+1)*.18;ctx.beginPath();ctx.arc(s.x,s.y,s.r*s.z,0,Math.PI*2);ctx.fillStyle='rgba(235,211,164,'+a+')';ctx.fill()}raf=requestAnimationFrame(drawStars)}
+function startStars(){if(!reduced&&!document.hidden&&!raf){resizeStars();raf=requestAnimationFrame(drawStars)}}
+function stopStars(){if(raf){cancelAnimationFrame(raf);raf=0}}
+if(!reduced){startStars();addEventListener('resize',()=>{resizeStars()},{passive:true});document.addEventListener('visibilitychange',()=>document.hidden?stopStars():startStars())}
 const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 const visual=document.getElementById('heroVisual');
