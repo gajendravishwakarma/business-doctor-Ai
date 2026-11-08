@@ -133,6 +133,27 @@ body{perspective:1400px}
 .tourDisclaimer{text-align:center;color:#7d8794;font-size:10px;margin-top:13px}
 @media(max-width:650px){.tourShell{border-radius:15px;margin-top:24px;transform:none}.tourShell:hover{transform:none}.tourTop{padding:0 13px}.tourBrand small{display:block;margin:3px 0 0 16px}.tourTabs{padding:10px 12px}.tourBody{grid-template-columns:1fr;min-height:0}.tourSide{display:none}.tourMain{padding:14px}.tourWelcome h3{font-size:19px}.tourWelcome p{font-size:10px}.tourMetrics{gap:6px}.tourMetric{padding:10px 8px}.tourMetric b{font-size:21px}.tourMetric small{font-size:7px}.tourLower{grid-template-columns:1fr}.tourBars{height:80px}.tourLive{font-size:8px}}
 @media(prefers-reduced-motion:reduce){.tourShell,.tourBars i{transition:none;animation:none}}
+
+/* Animated 3D business ecosystem visual */
+.spatialBusinessScene{height:330px;max-width:900px;margin:0 auto 28px;position:relative;isolation:isolate;perspective:1000px;transform-style:preserve-3d;overflow:hidden;border:1px solid #d7b77a25;border-radius:20px;background:radial-gradient(ellipse at 50% 48%,#b18a4b1c,transparent 42%),linear-gradient(145deg,#131c27b8,#090d14e8);box-shadow:inset 0 1px #ffffff12,0 24px 70px #0006}
+.spatialBusinessScene:before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 25%,#ffffff08 48%,transparent 68%);transform:translateX(-100%);animation:sceneSweep 8s ease-in-out infinite}
+.sceneAura{position:absolute;width:310px;height:210px;left:50%;top:48%;transform:translate(-50%,-50%);border-radius:50%;background:#d7b77a20;filter:blur(48px);animation:scenePulse 5s ease-in-out infinite}
+.sceneCore{position:absolute;left:50%;top:46%;width:112px;height:112px;transform:translate(-50%,-50%) rotateX(14deg) rotateY(-18deg);transform-style:preserve-3d;animation:sceneCoreFloat 5s ease-in-out infinite;z-index:3}
+.sceneCore:before,.sceneCore:after{content:"";position:absolute;inset:-13px;border:1px solid #e3c78a8a;border-radius:28px;transform:translateZ(-18px) rotate(45deg);box-shadow:0 0 32px #d7b77a2b}
+.sceneCore:after{inset:-25px;border-color:#86b9c55c;transform:translateZ(-34px) rotate(22deg);animation:sceneCoreSpin 18s linear infinite}
+.sceneCoreFace{height:100%;border:1px solid #f1d9a6a6;border-radius:25px;background:linear-gradient(145deg,#38424d,#171e28 60%,#10151c);box-shadow:18px 22px 38px #000b,inset 1px 1px #fff3,inset -1px -1px #d7b77a55;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:translateZ(20px);backdrop-filter:blur(12px)}
+.sceneCoreFace span{font-size:34px;color:#f1d9a6;text-shadow:0 0 25px #f1d9a6a8}.sceneCoreFace b{font:14px Georgia;color:#f7e7c4;letter-spacing:.08em}.sceneCoreFace small{font-size:7px;letter-spacing:.25em;color:#d7b77a;margin-top:4px}
+.sceneOrbit{position:absolute;left:50%;top:46%;width:360px;height:150px;border:1px solid #d7b77a45;border-radius:50%;transform:translate(-50%,-50%) rotateX(68deg) rotateZ(-18deg);transform-style:preserve-3d}
+.sceneOrbitA{animation:sceneOrbit 18s linear infinite}.sceneOrbitB{width:490px;height:205px;border-color:#8eb7c83d;transform:translate(-50%,-50%) rotateX(68deg) rotateZ(48deg);animation:sceneOrbit 25s linear infinite reverse}.sceneOrbitC{width:570px;height:230px;border-style:dashed;border-color:#d7b77a25;transform:translate(-50%,-50%) rotateX(68deg) rotateZ(8deg);animation:sceneOrbit 35s linear infinite}
+.sceneNode{position:absolute;z-index:4;min-width:142px;padding:11px 14px;border:1px solid #d7b77a66;border-radius:11px;background:linear-gradient(145deg,#26313deF,#101720ed);box-shadow:0 16px 36px #0009,inset 0 1px #fff2;backdrop-filter:blur(12px);transform-style:preserve-3d;animation:sceneNodeFloat 6s ease-in-out infinite}
+.sceneNode span{float:left;margin-right:9px;font-size:22px;color:#f1d9a6;text-shadow:0 0 18px #d7b77a66}.sceneNode b{display:block;font-size:11px;color:#f4e6ca}.sceneNode small{display:block;font-size:7px;letter-spacing:.12em;color:#9da9b5;margin-top:3px}
+.sceneNodeA{left:8%;top:20%;transform:rotateY(13deg);animation-delay:-1s}.sceneNodeB{right:8%;top:18%;transform:rotateY(-13deg);animation-delay:-3s}.sceneNodeC{left:12%;bottom:17%;animation-delay:-2s}.sceneNodeD{right:10%;bottom:16%;animation-delay:-4s}
+.sceneSpark{position:absolute;width:6px;height:6px;border-radius:50%;background:#f1d9a6;box-shadow:0 0 18px 5px #d7b77a75;animation:sceneSpark 3s ease-in-out infinite}.sparkA{left:28%;top:25%}.sparkB{right:29%;top:63%;animation-delay:-1s}.sparkC{left:49%;bottom:12%;animation-delay:-2s}
+.sceneCaption{position:absolute;bottom:12px;left:0;right:0;text-align:center;color:#a9b1bc;font-size:8px;letter-spacing:.2em}.sceneCaption i{display:inline-block;width:4px;height:4px;border-radius:50%;background:#d7b77a;margin:0 12px 2px;box-shadow:0 0 9px #d7b77a}
+@keyframes sceneSweep{0%,35%{transform:translateX(-100%)}70%,100%{transform:translateX(100%)}}@keyframes scenePulse{0%,100%{opacity:.45;scale:.88}50%{opacity:.9;scale:1.12}}@keyframes sceneCoreFloat{0%,100%{translate:0 0;rotate:-2deg}50%{translate:0 -9px;rotate:2deg}}@keyframes sceneCoreSpin{to{rotate:382deg}}@keyframes sceneOrbit{to{rotate:360deg}}@keyframes sceneNodeFloat{0%,100%{translate:0 0}50%{translate:0 -8px}}@keyframes sceneSpark{0%,100%{opacity:.25;scale:.7}50%{opacity:1;scale:1.5}}
+@media(max-width:700px){.spatialBusinessScene{height:260px;margin:0 auto 20px;border-radius:14px}.sceneCore{scale:.78}.sceneOrbitA{width:270px}.sceneOrbitB{width:350px}.sceneOrbitC{width:410px}.sceneNode{min-width:108px;padding:8px 9px}.sceneNode span{font-size:17px;margin-right:6px}.sceneNode b{font-size:9px}.sceneNode small{font-size:6px}.sceneNodeA{left:2%;top:15%}.sceneNodeB{right:2%;top:15%}.sceneNodeC{left:2%;bottom:15%}.sceneNodeD{right:2%;bottom:15%}.sceneCaption{font-size:6px;letter-spacing:.12em}}
+@media(prefers-reduced-motion:reduce){.spatialBusinessScene:before,.sceneAura,.sceneCore,.sceneCore:after,.sceneOrbit,.sceneNode,.sceneSpark{animation:none!important}}
+
 </style>
 </head>
 <body><canvas id="starfield" aria-hidden="true"></canvas><div class="scrollProgress" id="scrollProgress"></div><div class="grain"></div>
@@ -157,6 +178,16 @@ body{perspective:1400px}
 <section class="section productTour" id="product-tour">
 <div class="wrap">
 <div class="sectionHead center reveal"><div class="eyebrow">A closer look inside</div><h2>See your business <em>in motion.</em></h2><p>Explore an interactive preview of the workspace. Sample figures are illustrative—not live business data.</p></div>
+<div class="spatialBusinessScene reveal" id="spatialBusinessScene" aria-label="Animated 3D illustration of a connected business ecosystem">
+<div class="sceneAura"></div><div class="sceneOrbit sceneOrbitA"></div><div class="sceneOrbit sceneOrbitB"></div><div class="sceneOrbit sceneOrbitC"></div>
+<div class="sceneCore"><div class="sceneCoreFace"><span>✦</span><b>BUSINESS</b><small>INTELLIGENCE</small></div></div>
+<div class="sceneNode sceneNodeA"><span>♧</span><b>Customers</b><small>LEADS · FOLLOW-UP</small></div>
+<div class="sceneNode sceneNodeB"><span>↗</span><b>Marketing</b><small>CONTENT · CAMPAIGNS</small></div>
+<div class="sceneNode sceneNodeC"><span>▤</span><b>Operations</b><small>ORDERS · STOCK</small></div>
+<div class="sceneNode sceneNodeD"><span>⌁</span><b>Insights</b><small>REPORTS · ACTIONS</small></div>
+<div class="sceneSpark sparkA"></div><div class="sceneSpark sparkB"></div><div class="sceneSpark sparkC"></div>
+<div class="sceneCaption">ONE CONNECTED BUSINESS BRAIN <i></i> LIVE MOTION CONCEPT</div>
+</div>
 <div class="tourShell reveal">
 <div class="tourTop"><div class="tourBrand"><span class="tourPulse"></span> BUSINESS DOCTOR <b>AI</b><small>WORKSPACE PREVIEW</small></div><span class="tourLive">● INTERACTIVE DEMO</span></div>
 <div class="tourTabs" role="tablist" aria-label="Product preview">
