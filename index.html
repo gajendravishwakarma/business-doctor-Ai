@@ -99,6 +99,40 @@ body{perspective:1400px}
  .heroActions .btn:first-child,.feature.visible,.module.visible,.step.visible{animation:none!important}
  .reveal{transition:none!important}
 }
+
+/* Interactive product preview: CSS-only depth, no external images or libraries */
+.productTour{overflow:hidden}
+.tourShell{max-width:1000px;margin:34px auto 0;border:1px solid #d7b77a45;border-radius:22px;background:linear-gradient(145deg,#171d27,#0c1017 70%);box-shadow:0 28px 75px #0009,0 0 45px #d7b77a10,inset 0 1px #ffffff18;overflow:hidden;transform:perspective(1200px) rotateX(1deg);transition:transform .35s,border-color .35s}
+.tourShell:hover{transform:perspective(1200px) rotateX(0) translateY(-3px);border-color:#d7b77a80}
+.tourTop{height:58px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff12;background:#ffffff04}
+.tourBrand{font-size:11px;letter-spacing:.12em}.tourBrand b{color:var(--gold)}.tourBrand small{margin-left:12px;color:#77818f;font-size:9px;letter-spacing:.15em}
+.tourPulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:#9ad6b6;margin-right:9px;box-shadow:0 0 12px #9ad6b6}
+.tourLive{font-size:9px;letter-spacing:.12em;color:#b7d9c8}
+.tourTabs{display:flex;gap:7px;padding:13px 20px;border-bottom:1px solid #ffffff12}
+.tourTab{border:1px solid #ffffff18;background:#ffffff05;color:#aeb6c1;padding:8px 15px;border-radius:9px;font-size:11px;cursor:pointer}
+.tourTab.active{background:#d7b77a1c;border-color:#d7b77a80;color:#f1d9a6}
+.tourBody{display:grid;grid-template-columns:170px 1fr;min-height:350px}
+.tourSide{padding:20px 12px;border-right:1px solid #ffffff12;background:#080c12}
+.tourSideLabel{font-size:9px;color:#697484;letter-spacing:.16em;padding:0 10px 14px}
+.tourSideItem{padding:10px;border-radius:8px;color:#8994a3;font-size:12px;margin-bottom:5px}.tourSideItem.selected{background:#d7b77a16;color:#f1d9a6}.tourSideFoot{margin:55px 8px 0;padding-top:14px;border-top:1px solid #ffffff14;color:#788392;font-size:8px;line-height:2;letter-spacing:.1em}.tourSideFoot b{color:#d7b77a;font-size:10px;letter-spacing:0}
+.tourMain{padding:22px;min-width:0}.tourWelcome{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:18px}
+.tourWelcome small{font-size:9px;letter-spacing:.14em;color:#d7b77a}.tourWelcome h3{font:400 23px Georgia;margin:5px 0}.tourWelcome p{font-size:11px;color:#9aa4b1;margin:0}.tourDate{font-size:8px;color:#a9b3c0;border:1px solid #ffffff20;padding:6px 9px;border-radius:6px;white-space:nowrap}
+.tourMetrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tourMetric{padding:13px;border:1px solid #ffffff16;background:linear-gradient(145deg,#ffffff0a,#ffffff02);border-radius:11px;box-shadow:inset 0 1px #ffffff0c}
+.tourMetric small{display:block;color:#8c98a7;font-size:8px;letter-spacing:.1em}.tourMetric b{display:block;font:400 25px Georgia;color:#f3eadb;margin:5px 0}.tourMetric span{font-size:9px;color:#91bba6}
+.tourLower{display:grid;grid-template-columns:1.15fr 1fr;gap:10px;margin-top:12px}
+.tourChart,.tourInsight{border:1px solid #ffffff16;border-radius:11px;padding:13px;background:#ffffff04;min-width:0}
+.tourCardHead{display:flex;justify-content:space-between;align-items:center;font-size:11px}.tourCardHead small{font-size:8px;color:#7e8998;letter-spacing:.1em}.tourBars{height:105px;display:flex;align-items:end;gap:8px;padding:10px 3px 0;border-bottom:1px solid #ffffff18}
+.tourBars i{display:block;flex:1;border-radius:4px 4px 1px 1px;background:linear-gradient(180deg,#f1d9a6,#9d7a43);opacity:.8;transform-origin:bottom;animation:tourBarIn .8s ease both}
+.tourBars i:nth-child(2n){animation-delay:.08s}.tourBars i:nth-child(3n){animation-delay:.16s}
+@keyframes tourBarIn{from{transform:scaleY(.12);opacity:.2}to{transform:scaleY(1);opacity:.8}}
+.tourAxis{display:flex;justify-content:space-between;color:#768191;font-size:8px;padding-top:6px}
+.tourInsightIcon{width:27px;height:27px;display:grid;place-items:center;border-radius:8px;background:#d7b77a1a;color:#e8c98f;margin:14px 0 8px}
+.tourInsight> b{font-size:12px}.tourInsight p{font-size:10px;color:#9ba6b4;line-height:1.6;margin:5px 0 12px}
+.tourApproval{font-size:8px;letter-spacing:.08em;color:#a8d4bf;border-top:1px solid #ffffff12;padding-top:10px}
+.tourDisclaimer{text-align:center;color:#7d8794;font-size:10px;margin-top:13px}
+@media(max-width:650px){.tourShell{border-radius:15px;margin-top:24px;transform:none}.tourShell:hover{transform:none}.tourTop{padding:0 13px}.tourBrand small{display:block;margin:3px 0 0 16px}.tourTabs{padding:10px 12px}.tourBody{grid-template-columns:1fr;min-height:0}.tourSide{display:none}.tourMain{padding:14px}.tourWelcome h3{font-size:19px}.tourWelcome p{font-size:10px}.tourMetrics{gap:6px}.tourMetric{padding:10px 8px}.tourMetric b{font-size:21px}.tourMetric small{font-size:7px}.tourLower{grid-template-columns:1fr}.tourBars{height:80px}.tourLive{font-size:8px}}
+@media(prefers-reduced-motion:reduce){.tourShell,.tourBars i{transition:none;animation:none}}
 </style>
 </head>
 <body><canvas id="starfield" aria-hidden="true"></canvas><div class="scrollProgress" id="scrollProgress"></div><div class="grain"></div>
@@ -120,6 +154,26 @@ body{perspective:1400px}
 <section class="section"><div class="wrap growth"><div class="sectionHead reveal"><div class="eyebrow">From scattered data to decisions</div><h2>See the business behind <em>the numbers.</em></h2><p>Bring connected information into a shared workspace. Understand the signals, identify what needs attention and decide what to do next.</p><p>As more reliable data becomes available, the system can provide a more complete view—without pretending to know what has not been measured.</p></div><div class="console reveal"><div class="consoleTop"><span>BUSINESS OVERVIEW · CONCEPT PREVIEW</span><span class="live">● ILLUSTRATIVE UI</span></div><div class="metricGrid"><div class="metric"><small>Sales visibility</small><strong>Connected</strong><em>When sales data is linked</em></div><div class="metric"><small>Customer follow-up</small><strong>Organised</strong><em>From recorded lead status</em></div><div class="metric"><small>Marketing activity</small><strong>Trackable</strong><em>With channel integration</em></div><div class="metric"><small>Business insights</small><strong>Evidence-led</strong><em>Source-aware recommendations</em></div></div><div class="chart"><i class="bar" style="height:32%"></i><i class="bar" style="height:48%"></i><i class="bar" style="height:42%"></i><i class="bar" style="height:65%"></i><i class="bar" style="height:53%"></i><i class="bar" style="height:78%"></i><i class="bar" style="height:88%"></i><i class="bar" style="height:72%"></i></div><div class="disclaimer">Illustrative interface only—not live customer data, measured results or a growth guarantee.</div></div></div></section>
 <section class="section darkBand"><div class="wrap"><div class="sectionHead center reveal"><div class="eyebrow">Designed around real business workflows</div><h2>One connected system for <em>everyday work.</em></h2><p>Start with the workflows your business needs. Expand as your data and integrations grow.</p></div><div class="modules">
 <div class="module reveal"><div class="ico">◉</div><h3>Lead capture</h3><p>Bring enquiries from connected channels into an organised pipeline.</p></div><div class="module reveal"><div class="ico">↗</div><h3>Follow-up desk</h3><p>Track who needs a response and what action is due.</p></div><div class="module reveal"><div class="ico">✦</div><h3>Campaign studio</h3><p>Plan offers and content around your products and customers.</p></div><div class="module reveal"><div class="ico">▤</div><h3>Content planning</h3><p>Prepare platform-specific ideas, captions and creative briefs.</p></div><div class="module reveal"><div class="ico">♡</div><h3>Feedback insights</h3><p>Organise customer feedback and recurring service issues.</p></div><div class="module reveal"><div class="ico">◷</div><h3>Booking workflow</h3><p>Keep appointments and service enquiries in view.</p></div><div class="module reveal"><div class="ico">▦</div><h3>Stock awareness</h3><p>Review catalogue and stock signals from connected records.</p></div><div class="module reveal"><div class="ico">⌁</div><h3>Owner reports</h3><p>Review evidence, decisions, pending approvals and outcomes.</p></div></div></div></section>
+<section class="section productTour" id="product-tour">
+<div class="wrap">
+<div class="sectionHead center reveal"><div class="eyebrow">A closer look inside</div><h2>See your business <em>in motion.</em></h2><p>Explore an interactive preview of the workspace. Sample figures are illustrative—not live business data.</p></div>
+<div class="tourShell reveal">
+<div class="tourTop"><div class="tourBrand"><span class="tourPulse"></span> BUSINESS DOCTOR <b>AI</b><small>WORKSPACE PREVIEW</small></div><span class="tourLive">● INTERACTIVE DEMO</span></div>
+<div class="tourTabs" role="tablist" aria-label="Product preview">
+<button class="tourTab active" type="button" data-tour="overview" role="tab" aria-selected="true">Overview</button>
+<button class="tourTab" type="button" data-tour="customers" role="tab" aria-selected="false">Customers</button>
+<button class="tourTab" type="button" data-tour="marketing" role="tab" aria-selected="false">Marketing</button>
+</div>
+<div class="tourBody">
+<aside class="tourSide"><div class="tourSideLabel">WORKSPACE</div><div class="tourSideItem selected">◈ <span>Overview</span></div><div class="tourSideItem">♧ <span>Customers</span></div><div class="tourSideItem">↗ <span>Marketing</span></div><div class="tourSideItem">⌁ <span>Diagnosis</span></div><div class="tourSideFoot">OWNER CONTROL<br><b>Approval required</b></div></aside>
+<div class="tourMain">
+<div class="tourWelcome"><div><small id="tourEyebrow">BUSINESS SNAPSHOT · DEMO</small><h3 id="tourHeading">Your business at a glance</h3><p id="tourSubheading">A single view of the signals that matter.</p></div><span class="tourDate">SAMPLE VIEW</span></div>
+<div class="tourMetrics" id="tourMetrics"><div class="tourMetric"><small>ACTIVE LEADS</small><b>24</b><span>Illustrative</span></div><div class="tourMetric"><small>FOLLOW-UPS DUE</small><b>08</b><span>Illustrative</span></div><div class="tourMetric"><small>APPROVALS</small><b>03</b><span>Owner review</span></div></div>
+<div class="tourLower"><div class="tourChart"><div class="tourCardHead"><b id="tourChartTitle">Business activity</b><small>DEMO DATA</small></div><div class="tourBars" aria-label="Illustrative activity chart"><i style="height:34%"></i><i style="height:48%"></i><i style="height:40%"></i><i style="height:66%"></i><i style="height:55%"></i><i style="height:82%"></i><i style="height:72%"></i><i style="height:94%"></i></div><div class="tourAxis"><span>W1</span><span>W2</span><span>W3</span><span>W4</span></div></div>
+<div class="tourInsight"><div class="tourCardHead"><b id="tourInsightTitle">AI insight preview</b><span>✧</span></div><div class="tourInsightIcon">✦</div><b id="tourInsightMain">Follow-up opportunity</b><p id="tourInsightText">Review pending leads and decide which customers need attention first.</p><div class="tourApproval">◉ OWNER APPROVAL BEFORE ACTION</div></div></div>
+</div></div>
+<div class="tourDisclaimer">Interactive product concept preview · All names, numbers and charts shown here are sample content.</div>
+</div></div></section>
 <section class="section" id="workflow"><div class="wrap"><div class="sectionHead center reveal"><div class="eyebrow">A practical path to clarity</div><h2>How it works, <em>step by step.</em></h2><p>Business Doctor AI is designed to learn your business before it recommends action.</p></div><div class="steps">
 <div class="step reveal"><div class="stepNum">01</div><h3>Connect</h3><p>Add business details and connect available records or channels.</p></div><div class="step reveal"><div class="stepNum">02</div><h3>Understand</h3><p>Build a structured picture of customers, products and operations.</p></div><div class="step reveal"><div class="stepNum">03</div><h3>Diagnose</h3><p>Identify supported issues, gaps and potential opportunities.</p></div><div class="step reveal"><div class="stepNum">04</div><h3>Decide</h3><p>Review practical recommendations, evidence and expected trade-offs.</p></div><div class="step reveal"><div class="stepNum">05</div><h3>Approve & learn</h3><p>Approve permitted actions and measure outcomes from real data.</p></div></div></div></section>
 <section class="section darkBand" id="growth"><div class="wrap growth"><div class="sectionHead reveal"><div class="eyebrow">What better visibility can unlock</div><h2>Build the conditions for <em>measurable growth.</em></h2><p>Business Doctor AI is designed to help owners focus on the levers that can influence business performance. Actual outcomes depend on your market, offer, execution, data quality and customer response.</p><div class="quote">The goal isn't a magic growth number. It's better decisions, consistent execution and results you can actually measure.</div></div><div class="growthPanel reveal"><div class="eyebrow">Potential business levers</div><div class="growthRow"><span>Faster lead response</span><b>Fewer missed enquiries</b></div><div class="growthRow"><span>Consistent follow-up</span><b>More chances to convert</b></div><div class="growthRow"><span>Customer reactivation</span><b>More repeat-visit opportunities</b></div><div class="growthRow"><span>Margin-aware promotion</span><b>Smarter offer selection</b></div><div class="growthRow"><span>Stock & booking visibility</span><b>Better daily coordination</b></div><div class="growthRow"><span>Performance tracking</span><b>Learn what is working</b></div><p class="growthNote">These are possible mechanisms of improvement, not guaranteed outcomes or measured customer results. No fixed revenue, profit or growth percentage is promised.</p></div></div></section>
@@ -177,4 +231,18 @@ document.querySelectorAll('.feature,.module,.secure').forEach(card=>{
 card.addEventListener('pointermove',e=>{const r=card.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;card.style.transform='perspective(850px) rotateY('+(x*3)+'deg) rotateX('+(-y*3)+'deg) translateY(-2px)';},{passive:true});
 card.addEventListener('pointerleave',()=>{card.style.transform='';});
 });
-})();</script></body></html>
+})();
+/* Local interactive preview tabs: sample content only; no network calls. */
+(()=>{const copy={
+overview:{eyebrow:"BUSINESS SNAPSHOT · DEMO",title:"Your business at a glance",sub:"A single view of the signals that matter.",metrics:[["ACTIVE LEADS","24","Illustrative"],["FOLLOW-UPS DUE","08","Illustrative"],["APPROVALS","03","Owner review"]],chart:"Business activity",insight:"Follow-up opportunity",detail:"Review pending leads and decide which customers need attention first."},
+customers:{eyebrow:"CUSTOMER HUB · DEMO",title:"Know every customer touchpoint",sub:"See enquiries, follow-ups and repeat-visit opportunities.",metrics:[["NEW ENQUIRIES","18","Illustrative"],["FOLLOW-UPS","06","Illustrative"],["RETURN VISITS","12","Illustrative"]],chart:"Customer activity",insight:"Customer recovery",detail:"Prioritise customers who have not responded. Review the suggested follow-up before sending."},
+marketing:{eyebrow:"MARKETING ENGINE · DEMO",title:"Plan marketing with a purpose",sub:"Connect business goals to content and owner-approved campaigns.",metrics:[["CONTENT IDEAS","09","Illustrative"],["DRAFTS READY","04","Illustrative"],["PENDING REVIEW","02","Owner review"]],chart:"Content activity",insight:"Campaign suggestion",detail:"A product-focused campaign could be prepared for review. Publishing stays under owner control."}
+};
+const tabs=document.querySelectorAll(".tourTab");if(!tabs.length)return;
+tabs.forEach(tab=>tab.addEventListener("click",()=>{const d=copy[tab.dataset.tour];if(!d)return;
+tabs.forEach(t=>{const active=t===tab;t.classList.toggle("active",active);t.setAttribute("aria-selected",String(active));});
+document.getElementById("tourEyebrow").textContent=d.eyebrow;document.getElementById("tourHeading").textContent=d.title;document.getElementById("tourSubheading").textContent=d.sub;document.getElementById("tourChartTitle").textContent=d.chart;document.getElementById("tourInsightMain").textContent=d.insight;document.getElementById("tourInsightText").textContent=d.detail;
+document.getElementById("tourMetrics").innerHTML=d.metrics.map(m=>'<div class="tourMetric"><small>'+m[0]+'</small><b>'+m[1]+'</b><span>'+m[2]+'</span></div>').join("");
+const bars=document.querySelector(".tourBars");bars.innerHTML=[34,48,40,66,55,82,72,94].map((h,i)=>'<i style="height:'+Math.max(18,Math.min(95,h+(d===copy.customers?i%3*7:d===copy.marketing?(i%2?12:-7):0)))+'%"></i>').join("");
+}));})();
+</script></body></html>
