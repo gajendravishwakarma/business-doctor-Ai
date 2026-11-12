@@ -462,16 +462,28 @@ function bdFriendlyAuthError(message){
  if(/email not confirmed/i.test(m))return "Pehle inbox mein latest confirmation email verify karein. Naya signup na karein.";
  return m||"Request complete nahi hui. Internet connection check karke dobara try karein.";
 }
-function bdRestoreConfirmation(){
+async function bdRestoreConfirmation(){
  const hash=new URLSearchParams(window.location.hash.replace(/^#/,""));
  const query=new URLSearchParams(window.location.search);
  const error=query.get("error_description")||hash.get("error_description");
- if(error){bdMessage("Email confirmation error: "+decodeURIComponent(error.replace(/\+/g," ")), "error");return;}
+ if(error){bdMessage("Email confirmation error: "+error.replace(/\+/g," "), "error");return;}
+ const tokenHash=query.get("token_hash"),type=query.get("type");
+ if(tokenHash&&type){
+  bdMessage("Email link verify ho raha hai. Kripya page band na karein...","loading");
+  try{
+   const r=await fetch(BD_API+"/api/auth/verify",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token_hash:tokenHash,type})});
+   const d=await r.json().catch(()=>({success:false,message:"Verification server se response nahi mila."}));
+   if(!r.ok||!d.success)throw new Error(bdFriendlyAuthError(d.message||"Email verification failed"));
+   window.history.replaceState({},document.title,window.location.pathname);
+   bdMessage("Email verified successfully. Workspace khol rahe hain...","success");
+   bdOpenWorkspace(d.session);return;
+  }catch(err){bdMessage("Email verification nahi ho saki: "+bdFriendlyAuthError(err.message),"error");return;}
+ }
  const access=hash.get("access_token"),refresh=hash.get("refresh_token");
  if(access&&refresh){
   const session={access_token:access,refresh_token:refresh,expires_in:Number(hash.get("expires_in")||3600)};
   bdMessage("Email verified. Secure workspace khol rahe hain...","success");
-  window.history.replaceState({},document.title,window.location.pathname+window.location.search);
+  window.history.replaceState({},document.title,window.location.pathname);
   bdOpenWorkspace(session);
  }
 }
