@@ -551,7 +551,8 @@ bdAuthForm.addEventListener("submit",async e=>{
   const d=await r.json().catch(()=>({success:false,message:"Server se valid response nahi mila."}));
   if(!r.ok||!d.success){if(bdLoginMode&&d.code==="email_not_confirmed")bdRecoveryActions("resend");else if(bdLoginMode&&d.code==="invalid_credentials")bdRecoveryActions("forgot");throw new Error(d.message||"Request failed");}bdRecoveryActions("none");
   if(!d.session){
-   bdMessage("Confirmation email request accepted. Check your inbox and spam folder. After verification, log in on this page. "+(d.message||""),"success");
+   bdRecoveryActions("resend");
+   bdMessage("Account request received, but email verification is still pending. If the email does not arrive, use Resend Verification Email below. Check Inbox and Spam. "+(d.message||""),"success");
    return;
   }
   if(bdLoginMode){bdMessage("Login successful. Opening your workspace...","success");bdOpenWorkspace(d.session);return;}
