@@ -549,7 +549,22 @@ bdAuthForm.addEventListener("submit",async e=>{
  try{
   const r=await fetch(BD_API+"/api/auth/"+(bdLoginMode?"login":"signup"),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload),signal:controller.signal});
   const d=await r.json().catch(()=>({success:false,message:"Server se valid response nahi mila."}));
-  if(!r.ok||!d.success){if(bdLoginMode&&d.code==="email_not_confirmed")bdRecoveryActions("resend");else if(bdLoginMode&&d.code==="invalid_credentials")bdRecoveryActions("forgot");throw new Error(d.message||"Request failed");}bdRecoveryActions("none");
+  if(!r.ok||!d.success){
+   const authCode=String(d.code||"").toLowerCase();
+   const authMessage=String(d.message||"");
+   if(bdLoginMode&&(authCode==="email_not_confirmed"||/email not confirmed/i.test(authMessage))){
+    bdRecoveryActions("resend");
+    bdMessage("Your email address is not verified yet. Select Resend Verification Email below. We will send a fresh confirmation link if delivery is available.", "error");
+    return;
+   }
+   if(bdLoginMode&&(authCode==="invalid_credentials"||/invalid login credentials/i.test(authMessage))){
+    bdRecoveryActions("forgot");
+    bdMessage("Incorrect email or password. Check your details. If you forgot your password, select Forgot Password below.", "error");
+    return;
+   }
+   throw new Error(authMessage||"Request failed");
+  }
+  bdRecoveryActions("none");
   if(!d.session){
    bdRecoveryActions("resend");
    bdMessage("Account request received, but email verification is still pending. If the email does not arrive, use Resend Verification Email below. Check Inbox and Spam. "+(d.message||""),"success");
