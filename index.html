@@ -457,35 +457,39 @@ const bdStatus=document.getElementById("bdStatus"),bdAuthForm=document.getElemen
 function bdMessage(t,state="info"){bdStatus.textContent=t;bdStatus.dataset.state=state}
 function bdFriendlyAuthError(message){
  const m=String(message||"");
- if(/rate.?limit|email rate limit|too many requests/i.test(m))return "Supabase email limit abhi reach ho gayi hai. Naya account mat banayein. Thoda wait karke existing account se Login karein.";
- if(/already registered|already exists|user already/i.test(m))return "Is email se account pehle se bana hua hai. Create Account ke bajay Login karein.";
- if(/invalid login credentials/i.test(m))return "Email ya password sahi nahi hai, ya email verification abhi pending hai.";
- if(/email not confirmed/i.test(m))return "Pehle inbox mein latest confirmation email verify karein. Naya signup na karein.";
- return m||"Request complete nahi hui. Internet connection check karke dobara try karein.";
+ if(/rate.?limit|email rate limit|too many requests/i.test(m))return "Email sending limit reached. Please wait before requesting another email. Do not create another account.";
+ if(/already registered|already exists|user already/i.test(m))return "This email address is already registered. Choose Login instead of Create Account.";
+ if(/invalid login credentials|invalid email or password/i.test(m))return "Incorrect email address or password. Check both fields and try again. If you have not verified your email, select Resend verification email.";
+ if(/email not confirmed/i.test(m))return "Your email address is not verified yet. Select Resend verification email and use the newest link.";
+ if(/invalid email|email address.*invalid|valid email/i.test(m))return "Please enter a valid email address, for example name@example.com.";
+ if(/password.*(least|short|length)|weak password/i.test(m))return "Your password must contain at least 8 characters.";
+ if(/network|failed to fetch|fetch failed/i.test(m))return "Connection failed. Check your internet connection and try again.";
+ if(/expired|invalid.*token|token.*invalid/i.test(m))return "This link is invalid or expired. Request a new email and use the latest link.";
+ return "We could not complete your request. Please check your details and try again.";
 }
 async function bdRestoreConfirmation(){
  const hash=new URLSearchParams(window.location.hash.replace(/^#/,""));
  const query=new URLSearchParams(window.location.search);
  const error=query.get("error_description")||hash.get("error_description");
- if(error){bdMessage("Email confirmation error: "+error.replace(/\+/g," "), "error");return;}
+ if(error){bdMessage("Email confirmation failed: "+error.replace(/\+/g," "), "error");return;}
  const tokenHash=query.get("token_hash"),type=query.get("type");
  if(tokenHash&&type){
-  bdMessage("Email link verify ho raha hai. Kripya page band na karein...","loading");
+  bdMessage("Verifying your email. Please keep this page open...","loading");
   try{
    const r=await fetch(BD_API+"/api/auth/verify",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token_hash:tokenHash,type})});
    const d=await r.json().catch(()=>({success:false,message:"Verification server se response nahi mila."}));
    if(!r.ok||!d.success)throw new Error(bdFriendlyAuthError(d.message||"Email verification failed"));
    window.history.replaceState({},document.title,window.location.pathname);
    if(type==="recovery"){bdShowPasswordReset(d.session);return;}
-   bdMessage("Email verified successfully. Workspace khol rahe hain...","success");
+   bdMessage("Email verified successfully. Opening your workspace...","success");
    bdOpenWorkspace(d.session);return;
-  }catch(err){bdMessage("Email verification nahi ho saki: "+bdFriendlyAuthError(err.message),"error");return;}
+  }catch(err){bdMessage("Email verification failed: "+bdFriendlyAuthError(err.message),"error");return;}
  }
  const access=hash.get("access_token"),refresh=hash.get("refresh_token");
  if(access&&refresh){
   const session={access_token:access,refresh_token:refresh,expires_in:Number(hash.get("expires_in")||3600)};
   if(hash.get("type")==="recovery"){window.history.replaceState({},document.title,window.location.pathname);bdShowPasswordReset(session);return;}
-  bdMessage("Email verified. Secure workspace khol rahe hain...","success");
+  bdMessage("Email verified. Opening your secure workspace...","success");
   window.history.replaceState({},document.title,window.location.pathname);
   bdOpenWorkspace(session);
  }
@@ -500,36 +504,36 @@ function bdShowPasswordReset(session){
  let box=document.getElementById("bdResetForm");
  if(!box){box=document.createElement("form");box.id="bdResetForm";box.innerHTML='<div class="eyebrow">SECURE PASSWORD RESET</div><h3 style="font:400 25px Georgia">Set a new password</h3><label for="bdNewPassword">New password</label><input id="bdNewPassword" type="password" minlength="8" maxlength="128" autocomplete="new-password" required placeholder="At least 8 characters"><label for="bdConfirmPassword">Confirm new password</label><input id="bdConfirmPassword" type="password" minlength="8" maxlength="128" autocomplete="new-password" required placeholder="Enter it again"><button class="btn" type="submit">Update password ↗</button>';panel.insertBefore(box,bdStatus);}
  box.style.display="block";
- box.onsubmit=async e=>{e.preventDefault();const p=document.getElementById("bdNewPassword").value,cp=document.getElementById("bdConfirmPassword").value;if(p.length<8){bdMessage("Password kam se kam 8 characters ka hona chahiye.","error");return;}if(p!==cp){bdMessage("Dono passwords match nahi kar rahe.","error");return;}const btn=box.querySelector("button");btn.disabled=true;bdMessage("Password securely update ho raha hai...","loading");try{const r=await fetch(BD_API+"/api/auth/update-password",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({access_token:bdSession.access_token,refresh_token:bdSession.refresh_token,password:p})});const d=await r.json().catch(()=>({success:false,message:"Server response nahi mila."}));if(!r.ok||!d.success)throw new Error(d.message||"Password update failed");box.style.display="none";bdSession=null;bdLoginMode=true;document.getElementById("bdEmail").value=document.getElementById("bdEmail").value.trim();bdAuthForm.style.display="block";document.getElementById("bdMode").style.display="none";document.querySelector("#accountPanel h3").textContent="Password updated";bdMessage(d.message+" Login mode mein apna naya password enter karein.","success");document.getElementById("bdPassword").value="";document.getElementById("bdPassword").focus();}catch(err){bdMessage(bdFriendlyAuthError(err.message),"error");}finally{btn.disabled=false;}};
- bdMessage("Recovery link verified. Ab naya password set karein.","success");
+ box.onsubmit=async e=>{e.preventDefault();const p=document.getElementById("bdNewPassword").value,cp=document.getElementById("bdConfirmPassword").value;if(p.length<8){bdMessage("Your password must contain at least 8 characters.","error");return;}if(p!==cp){bdMessage("The passwords do not match.","error");return;}const btn=box.querySelector("button");btn.disabled=true;bdMessage("Updating your password securely...","loading");try{const r=await fetch(BD_API+"/api/auth/update-password",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({access_token:bdSession.access_token,refresh_token:bdSession.refresh_token,password:p})});const d=await r.json().catch(()=>({success:false,message:"Server response nahi mila."}));if(!r.ok||!d.success)throw new Error(d.message||"Password update failed");box.style.display="none";bdSession=null;bdLoginMode=true;document.getElementById("bdEmail").value=document.getElementById("bdEmail").value.trim();bdAuthForm.style.display="block";document.getElementById("bdMode").style.display="none";document.querySelector("#accountPanel h3").textContent="Password updated";bdMessage(d.message+" Login mode mein apna naya password enter karein.","success");document.getElementById("bdPassword").value="";document.getElementById("bdPassword").focus();}catch(err){bdMessage(bdFriendlyAuthError(err.message),"error");}finally{btn.disabled=false;}};
+ bdMessage("Recovery link verified. Set your new password below.","success");
 }
 bdRestoreConfirmation();
 function bdOpenWorkspace(session){if(!session?.access_token||!session?.refresh_token){bdMessage("Secure session missing. Please login again.");return;}const params=new URLSearchParams({access_token:session.access_token,refresh_token:session.refresh_token,token_type:"bearer",type:"bearer",expires_in:String(session.expires_in||3600)});window.location.assign(BD_API+"/#"+params.toString());}
-function bdShowBusiness(session){bdSession=session;bdAuthForm.style.display="none";document.getElementById("bdMode").style.display="none";bdBusinessForm.style.display="block";document.getElementById("bdLogout").style.display="inline-flex";bdMessage("Account verified. Ab apne business ki details bharein.");}
+function bdShowBusiness(session){bdSession=session;bdAuthForm.style.display="none";document.getElementById("bdMode").style.display="none";bdBusinessForm.style.display="block";document.getElementById("bdLogout").style.display="inline-flex";bdMessage("Account verified. Enter your business details to continue.");}
 document.getElementById("bdMode").addEventListener("click",()=>{bdLoginMode=!bdLoginMode;document.getElementById("bdResend").style.display=bdLoginMode?"inline-flex":"none";document.getElementById("bdForgot").style.display=bdLoginMode?"inline-flex":"none";document.querySelector("#accountPanel h3").textContent=bdLoginMode?"Welcome back":"Create your account";document.getElementById("bdName").required=!bdLoginMode;document.getElementById("bdName").style.display=bdLoginMode?"none":"block";document.querySelector('label[for="bdName"]').style.display=bdLoginMode?"none":"block";document.getElementById("bdPassword").autocomplete=bdLoginMode?"current-password":"new-password";document.getElementById("bdAuthSubmit").textContent=bdLoginMode?"Login ↗":"Create account ↗";document.getElementById("bdMode").textContent=bdLoginMode?"New here — Create account":"I already have an account — Login";});
 document.getElementById("bdForgot").addEventListener("click",async()=>{
  const email=document.getElementById("bdEmail").value.trim();
- if(!email){bdMessage("Apna registered Gmail address bharein.","error");document.getElementById("bdEmail").focus();return;}
+ if(!email){bdMessage("Enter your registered email address.","error");document.getElementById("bdEmail").focus();return;}
  const btn=document.getElementById("bdForgot");btn.disabled=true;
- bdMessage("Password reset email bheji ja rahi hai...","loading");
+ bdMessage("Sending password reset email...","loading");
  try{
   const r=await fetch(BD_API+"/api/auth/forgot-password",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email})});
   const d=await r.json().catch(()=>({success:false,message:"Server response nahi mila."}));
   if(!r.ok||!d.success)throw new Error(bdFriendlyAuthError(d.message||"Reset request failed"));
-  bdMessage(d.message+" Email ke link ko open karke naya password set karein.","success");
+  bdMessage(d.message+" Open the link in your email to set a new password.","success");
  }catch(err){bdMessage(bdFriendlyAuthError(err.message),"error");}
  finally{btn.disabled=false;}
 });
 document.getElementById("bdResend").addEventListener("click",async()=>{
  const email=document.getElementById("bdEmail").value.trim();
- if(!email){bdMessage("Pehle apna registered email address bharein.","error");document.getElementById("bdEmail").focus();return;}
+ if(!email){bdMessage("Enter your registered email address first.","error");document.getElementById("bdEmail").focus();return;}
  const btn=document.getElementById("bdResend");btn.disabled=true;const label=btn.textContent;btn.textContent="Sending...";
- bdMessage("Verification email resend request bhej rahe hain...","loading");
+ bdMessage("Requesting a new verification email...","loading");
  try{
   const r=await fetch(BD_API+"/api/auth/resend-verification",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email})});
   const d=await r.json().catch(()=>({success:false,message:"Server response nahi mila."}));
   if(!r.ok||!d.success)throw new Error(bdFriendlyAuthError(d.message||"Email resend failed"));
-  bdMessage(d.message+" Naya link hi use karein; purana link invalid rahega.","success");
+  bdMessage(d.message+" Use the newest link. Previous links may no longer work.","success");
  }catch(err){bdMessage(bdFriendlyAuthError(err.message),"error");}
  finally{btn.disabled=false;btn.textContent=label;}
 });
@@ -539,25 +543,25 @@ bdAuthForm.addEventListener("submit",async e=>{
  const payload={email:document.getElementById("bdEmail").value.trim(),password:document.getElementById("bdPassword").value,name:document.getElementById("bdName").value.trim()};
  submit.disabled=true;submit.setAttribute("aria-busy","true");
  const original=submit.textContent;submit.textContent=bdLoginMode?"Signing in...":"Creating account...";
- bdMessage(bdLoginMode?"Secure login ho raha hai...":"Account request submit ho rahi hai...","loading");
+ bdMessage(bdLoginMode?"Signing in securely...":"Submitting your account request...","loading");
  const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),20000);
  try{
   const r=await fetch(BD_API+"/api/auth/"+(bdLoginMode?"login":"signup"),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload),signal:controller.signal});
   const d=await r.json().catch(()=>({success:false,message:"Server se valid response nahi mila."}));
   if(!r.ok||!d.success)throw new Error(bdFriendlyAuthError(d.message||"Request failed"));
   if(!d.session){
-   bdMessage("Confirmation email request accepted. Inbox aur Spam check karein. Email verify hone ke baad isi page par Login karein. "+(d.message||""),"success");
+   bdMessage("Confirmation email request accepted. Check your inbox and spam folder. After verification, log in on this page. "+(d.message||""),"success");
    return;
   }
-  if(bdLoginMode){bdMessage("Login successful. Workspace khol rahe hain...","success");bdOpenWorkspace(d.session);return;}
+  if(bdLoginMode){bdMessage("Login successful. Opening your workspace...","success");bdOpenWorkspace(d.session);return;}
   bdShowBusiness(d.session);
  }catch(err){
-  const message=err.name==="AbortError"?"Request mein 20 seconds se zyada lag gaye. Network check karein; account bana ho sakta hai, isliye dobara signup se pehle Login try karein.":bdFriendlyAuthError(err.message);
+  const message=err.name==="AbortError"?"The request timed out. Check your connection, then try Login before creating another account.":bdFriendlyAuthError(err.message);
   bdMessage(message,"error");
  }finally{clearTimeout(timeout);submit.disabled=false;submit.removeAttribute("aria-busy");submit.textContent=original;}
 });
-bdBusinessForm.addEventListener("submit",async e=>{e.preventDefault();if(!bdSession?.access_token){bdMessage("Session expire ho gaya. Dobara login karein.");return;}const payload={name:document.getElementById("bdBusinessName").value,businessType:document.getElementById("bdType").value,phone:document.getElementById("bdPhone").value,websiteUrl:document.getElementById("bdWebsite").value,businessStage:document.getElementById("bdStage").value,dataMaturity:document.getElementById("bdMaturity").value,ownerName:document.getElementById("bdName").value,email:document.getElementById("bdEmail").value};bdMessage("Business workspace create ho raha hai...");try{const r=await fetch(BD_API+"/api/business/onboard",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+bdSession.access_token},body:JSON.stringify(payload)});const d=await r.json();if(!r.ok||!d.success)throw new Error(d.message||"Business create nahi hua");bdMessage("Business workspace ban gaya: "+d.business.name+". Aapka account secure hai. Workspace khol rahe hain...");bdBusinessForm.style.display="none";bdOpenWorkspace(bdSession);}catch(err){bdMessage(err.message||"Business create nahi ho paya.");}});
-document.getElementById("bdLogout").addEventListener("click",()=>{bdSession=null;bdAuthForm.reset();bdBusinessForm.reset();bdAuthForm.style.display="block";bdBusinessForm.style.display="none";document.getElementById("bdMode").style.display="inline-flex";document.getElementById("bdLogout").style.display="none";bdMessage("Logged out. Password/token browser me save nahi kiya gaya.");});
+bdBusinessForm.addEventListener("submit",async e=>{e.preventDefault();if(!bdSession?.access_token){bdMessage("Your session has expired. Please log in again.");return;}const payload={name:document.getElementById("bdBusinessName").value,businessType:document.getElementById("bdType").value,phone:document.getElementById("bdPhone").value,websiteUrl:document.getElementById("bdWebsite").value,businessStage:document.getElementById("bdStage").value,dataMaturity:document.getElementById("bdMaturity").value,ownerName:document.getElementById("bdName").value,email:document.getElementById("bdEmail").value};bdMessage("Creating your business workspace...");try{const r=await fetch(BD_API+"/api/business/onboard",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+bdSession.access_token},body:JSON.stringify(payload)});const d=await r.json();if(!r.ok||!d.success)throw new Error(d.message||"We could not create your business workspace.");bdMessage("Business workspace created: "+d.business.name+". Your account is secure. Opening your workspace...");bdBusinessForm.style.display="none";bdOpenWorkspace(bdSession);}catch(err){bdMessage(err.message||"Business create nahi ho paya.");}});
+document.getElementById("bdLogout").addEventListener("click",()=>{bdSession=null;bdAuthForm.reset();bdBusinessForm.reset();bdAuthForm.style.display="block";bdBusinessForm.style.display="none";document.getElementById("bdMode").style.display="inline-flex";document.getElementById("bdLogout").style.display="none";bdMessage("You have been logged out. Your password and session tokens are not stored in this page.");});
 
 /* Lightweight spatial depth: pointer-only on capable devices; no scroll loop. */
 (()=>{const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;const fine=matchMedia('(pointer:fine)').matches;if(reduce||!fine)return;
