@@ -455,7 +455,7 @@ const BD_API="https://business-doctor-ai-backend.onrender.com";
 let bdSession=null,bdLoginMode=false;
 const bdStatus=document.getElementById("bdStatus"),bdAuthForm=document.getElementById("bdAuthForm"),bdBusinessForm=document.getElementById("bdBusinessForm");
 function bdMessage(t,state="info"){bdStatus.textContent=t;bdStatus.dataset.state=state}
-function bdRecoveryActions(kind="none"){document.getElementById("bdForgot").style.display=kind==="forgot"?"inline-flex":"none";document.getElementById("bdResend").style.display=kind==="resend"?"inline-flex":"none";}
+function bdRecoveryActions(kind="none"){document.getElementById("bdForgot").style.display=(kind==="forgot"||kind==="both")?"inline-flex":"none";document.getElementById("bdResend").style.display=(kind==="resend"||kind==="both")?"inline-flex":"none";}
 function bdFriendlyAuthError(message){
  const m=String(message||"");
  if(/rate.?limit|email rate limit|too many requests/i.test(m))return "Email sending limit reached. Please wait before requesting another email. Do not create another account.";
@@ -545,7 +545,7 @@ bdAuthForm.addEventListener("submit",async e=>{
  submit.disabled=true;submit.setAttribute("aria-busy","true");
  const original=submit.textContent;submit.textContent=bdLoginMode?"Signing in...":"Creating account...";
  bdMessage(bdLoginMode?"Signing in securely...":"Submitting your account request...","loading");
- const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),20000);
+ const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),90000);
  try{
   const r=await fetch(BD_API+"/api/auth/"+(bdLoginMode?"login":"signup"),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload),signal:controller.signal});
   const d=await r.json().catch(()=>({success:false,message:"Server se valid response nahi mila."}));
@@ -573,8 +573,12 @@ bdAuthForm.addEventListener("submit",async e=>{
   if(bdLoginMode){bdMessage("Login successful. Opening your workspace...","success");bdOpenWorkspace(d.session);return;}
   bdShowBusiness(d.session);
  }catch(err){
-  const message=err.name==="AbortError"?"The request timed out. Check your connection, then try Login before creating another account.":bdFriendlyAuthError(err.message);
-  bdMessage(message,"error");
+  if(err.name==="AbortError"){
+   if(bdLoginMode)bdRecoveryActions("both");
+   bdMessage("The server did not respond in time. On the free hosting plan it may be waking up. Wait briefly and try Login again. If your email is unverified, use Resend Verification Email; if your password is wrong, use Forgot Password. Do not create another account.","error");
+  }else{
+   bdMessage(bdFriendlyAuthError(err.message),"error");
+  }
  }finally{clearTimeout(timeout);submit.disabled=false;submit.removeAttribute("aria-busy");submit.textContent=original;}
 });
 bdBusinessForm.addEventListener("submit",async e=>{e.preventDefault();if(!bdSession?.access_token){bdMessage("Your session has expired. Please log in again.");return;}const payload={name:document.getElementById("bdBusinessName").value,businessType:document.getElementById("bdType").value,phone:document.getElementById("bdPhone").value,websiteUrl:document.getElementById("bdWebsite").value,businessStage:document.getElementById("bdStage").value,dataMaturity:document.getElementById("bdMaturity").value,ownerName:document.getElementById("bdName").value,email:document.getElementById("bdEmail").value};bdMessage("Creating your business workspace...");try{const r=await fetch(BD_API+"/api/business/onboard",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+bdSession.access_token},body:JSON.stringify(payload)});const d=await r.json();if(!r.ok||!d.success)throw new Error(d.message||"We could not create your business workspace.");bdMessage("Business workspace created: "+d.business.name+". Your account is secure. Opening your workspace...");bdBusinessForm.style.display="none";bdOpenWorkspace(bdSession);}catch(err){bdMessage(err.message||"Business create nahi ho paya.");}});
