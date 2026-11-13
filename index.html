@@ -454,7 +454,8 @@ document.getElementById("runDiagnosis")?.addEventListener("click",renderDiagnosi
 const BD_API="https://business-doctor-ai-backend.onrender.com";
 let bdSession=null,bdLoginMode=false;
 const bdStatus=document.getElementById("bdStatus"),bdAuthForm=document.getElementById("bdAuthForm"),bdBusinessForm=document.getElementById("bdBusinessForm");
-function bdMessage(t,state="info"){bdStatus.textContent=t;bdStatus.dataset.state=state}\nfunction bdRecoveryActions(kind="none"){document.getElementById("bdForgot").style.display=kind==="forgot"?"inline-flex":"none";document.getElementById("bdResend").style.display=kind==="resend"?"inline-flex":"none";}
+function bdMessage(t,state="info"){bdStatus.textContent=t;bdStatus.dataset.state=state}
+function bdRecoveryActions(kind="none"){document.getElementById("bdForgot").style.display=kind==="forgot"?"inline-flex":"none";document.getElementById("bdResend").style.display=kind==="resend"?"inline-flex":"none";}
 function bdFriendlyAuthError(message){
  const m=String(message||"");
  if(/rate.?limit|email rate limit|too many requests/i.test(m))return "Email sending limit reached. Please wait before requesting another email. Do not create another account.";
@@ -548,7 +549,7 @@ bdAuthForm.addEventListener("submit",async e=>{
  try{
   const r=await fetch(BD_API+"/api/auth/"+(bdLoginMode?"login":"signup"),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload),signal:controller.signal});
   const d=await r.json().catch(()=>({success:false,message:"Server se valid response nahi mila."}));
-  if(!r.ok||!d.success)throw new Error(bdFriendlyAuthError(d.message||"Request failed"));
+  if(!r.ok||!d.success){if(bdLoginMode&&d.code==="email_not_confirmed")bdRecoveryActions("resend");else if(bdLoginMode&&d.code==="invalid_credentials")bdRecoveryActions("forgot");throw new Error(d.message||"Request failed");}bdRecoveryActions("none");
   if(!d.session){
    bdMessage("Confirmation email request accepted. Check your inbox and spam folder. After verification, log in on this page. "+(d.message||""),"success");
    return;
