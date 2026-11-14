@@ -577,7 +577,8 @@ bdAuthForm.addEventListener("submit",async e=>{
    if(bdLoginMode)bdRecoveryActions("both");
    bdMessage("The server did not respond in time. On the free hosting plan it may be waking up. Wait briefly and try Login again. If your email is unverified, use Resend Verification Email; if your password is wrong, use Forgot Password. Do not create another account.","error");
   }else{
-   bdMessage(bdFriendlyAuthError(err.message),"error");
+   if(bdLoginMode)bdRecoveryActions("both");
+   bdMessage(bdFriendlyAuthError(err.message)+" If you cannot sign in, use the recovery options below. Do not create another account.","error");
   }
  }finally{clearTimeout(timeout);submit.disabled=false;submit.removeAttribute("aria-busy");submit.textContent=original;}
 });
