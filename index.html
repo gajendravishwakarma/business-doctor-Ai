@@ -486,8 +486,11 @@ async function bdRestoreConfirmation(){
    if(data.session){bdMessage("Email verified. Opening your Business Doctor AI workspace...","success");bdOpenWorkspace(data.session);return;}
   }catch(error){bdMessage(bdFriendlyAuthError(error.message),"error");return;}
  }
+ const hashParams=new URLSearchParams(window.location.hash.replace(/^#/,""));
+ const isRecovery=type==="recovery"||hashParams.get("type")==="recovery";
  const {data,error}=await bdSupabase.auth.getSession();
  if(error){bdMessage(bdFriendlyAuthError(error.message),"error");return;}
+ if(data.session&&isRecovery){bdShowPasswordReset(data.session);return;}
  if(data.session){bdMessage("Secure session restored. Opening your workspace...","success");bdOpenWorkspace(data.session);}
 }
 function bdShowPasswordReset(session){
