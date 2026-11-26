@@ -510,6 +510,15 @@ function bdShowPasswordReset(session){
  };
  bdMessage("Recovery link verified. Set your new password below.","success");
 }
+let bdRedirectingToStudio=false;
+bdSupabase.auth.onAuthStateChange((event,session)=>{
+ if(event==="PASSWORD_RECOVERY"&&session){bdShowPasswordReset(session);return;}
+ if((event==="SIGNED_IN"||event==="TOKEN_REFRESHED")&&session&&!bdRedirectingToStudio){
+  bdRedirectingToStudio=true;
+  bdMessage("Secure account verified. Opening your new Business Doctor AI Studio...","success");
+  bdOpenWorkspace(session);
+ }
+});
 bdRestoreConfirmation();
 function bdOpenWorkspace(session){if(!session?.access_token||!session?.refresh_token){bdMessage("Secure session missing. Please login again.");return;}const params=new URLSearchParams({access_token:session.access_token,refresh_token:session.refresh_token,token_type:"bearer",type:"bearer",expires_in:String(session.expires_in||3600)});window.location.assign("https://business-doctor-ai-studio.onrender.com/#"+params.toString());}
 function bdShowBusiness(session){bdSession=session;bdAuthForm.style.display="none";document.getElementById("bdMode").style.display="none";bdBusinessForm.style.display="block";document.getElementById("bdLogout").style.display="inline-flex";bdMessage("Account verified. Enter your business details to continue.");}
