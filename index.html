@@ -483,7 +483,7 @@ async function bdRestoreConfirmation(){
    if(error)throw error;
    window.history.replaceState({},document.title,window.location.pathname);
    if(type==="recovery"){bdShowPasswordReset(data.session);return;}
-   if(data.session){bdMessage("Email verified. Opening your Business Doctor AI workspace...","success");bdOpenWorkspace(data.session);return;}
+   if(data.session){bdClearPendingSignup();bdMessage("Email verified. Opening your Business Doctor AI dashboard...","success");bdOpenWorkspace(data.session);return;}
   }catch(error){bdMessage(bdFriendlyAuthError(error.message),"error");return;}
  }
  const hashParams=new URLSearchParams(window.location.hash.replace(/^#/,""));
@@ -533,12 +533,26 @@ document.getElementById("bdForgot").addEventListener("click",async()=>{
  try{const {error}=await bdSupabase.auth.resetPasswordForEmail(email,{redirectTo:BD_REDIRECT_URL});if(error)throw error;bdMessage("Password reset email sent. Open the latest link to set a new password.","success");}
  catch(error){bdMessage(bdFriendlyAuthError(error.message),"error");}finally{btn.disabled=false;}
 });
+const BD_PENDING_SIGNUP_KEY="bd_pending_signup_email";
+const BD_RESEND_COOLDOWN_KEY="bd_signup_resend_after";
+function bdPendingSignupEmail(){try{return localStorage.getItem(BD_PENDING_SIGNUP_KEY)||"";}catch{return "";}}
+function bdRememberPendingSignup(email){try{localStorage.setItem(BD_PENDING_SIGNUP_KEY,email.toLowerCase());}catch{}}
+function bdClearPendingSignup(){try{localStorage.removeItem(BD_PENDING_SIGNUP_KEY);localStorage.removeItem(BD_RESEND_COOLDOWN_KEY);}catch{}}
+function bdSetResendCooldown(seconds=60){
+ const until=Date.now()+seconds*1000;
+ try{localStorage.setItem(BD_RESEND_COOLDOWN_KEY,String(until));}catch{}
+ const btn=document.getElementById("bdResend");btn.disabled=true;
+ const tick=()=>{const left=Math.max(0,Math.ceil((until-Date.now())/1000));if(left){btn.textContent="Resend available in "+left+"s";setTimeout(tick,1000);}else{btn.disabled=false;btn.textContent="Resend verification email";}};
+ tick();
+}
 document.getElementById("bdResend").addEventListener("click",async()=>{
  const email=document.getElementById("bdEmail").value.trim();
  if(!email){bdMessage("Enter your email address first.","error");return;}
- const btn=document.getElementById("bdResend");btn.disabled=true;bdMessage("Sending verification email...","loading");
- try{const {error}=await bdSupabase.auth.resend({type:"signup",email,options:{emailRedirectTo:BD_REDIRECT_URL}});if(error)throw error;bdMessage("Verification email sent. Use the newest link from your inbox.","success");}
- catch(error){bdMessage(bdFriendlyAuthError(error.message),"error");}finally{btn.disabled=false;}
+ const btn=document.getElementById("bdResend"),until=Number(localStorage.getItem(BD_RESEND_COOLDOWN_KEY)||0);
+ if(Date.now()<until){bdMessage("Please wait before requesting another verification email. Your account is already created.","info");bdSetResendCooldown(Math.ceil((until-Date.now())/1000));return;}
+ btn.disabled=true;bdMessage("Sending one verification email...","loading");
+ try{const {error}=await bdSupabase.auth.resend({type:"signup",email,options:{emailRedirectTo:BD_REDIRECT_URL}});if(error)throw error;bdRememberPendingSignup(email);bdMessage("Verification email sent. Open the latest email once; do not create the account again.","success");bdSetResendCooldown(60);}
+ catch(error){bdMessage(bdFriendlyAuthError(error.message),"error");btn.disabled=false;btn.textContent="Resend verification email";}
 });
 bdAuthForm.addEventListener("submit",async e=>{
  e.preventDefault();
@@ -548,10 +562,18 @@ bdAuthForm.addEventListener("submit",async e=>{
  try{
   let data,error;
   if(bdLoginMode){({data,error}=await bdSupabase.auth.signInWithPassword({email,password}));}
-  else{({data,error}=await bdSupabase.auth.signUp({email,password,options:{data:{full_name:name,role:"owner"},emailRedirectTo:BD_REDIRECT_URL}}));}
+  else{
+   const pendingEmail=bdPendingSignupEmail();
+   if(pendingEmail&&pendingEmail===email.toLowerCase()){
+    bdRecoveryActions("resend");
+    bdMessage("This account has already been created. Check your inbox or use Resend Verification Email; do not submit Create Account again.","info");
+    return;
+   }
+   ({data,error}=await bdSupabase.auth.signUp({email,password,options:{data:{full_name:name,role:"owner"},emailRedirectTo:BD_REDIRECT_URL}}));
+  }
   if(error)throw error;
-  if(data.session){bdMessage("Account ready. Opening the new Business Doctor AI Studio...","success");bdOpenWorkspace(data.session);return;}
-  if(data.user&&!bdLoginMode){bdRecoveryActions("resend");bdMessage("Account created. Please verify your email using the link we sent. You will return here and then enter the new Studio.","success");return;}
+  if(data.session){bdClearPendingSignup();bdMessage("Account ready. Opening the new Business Doctor AI Studio...","success");bdOpenWorkspace(data.session);return;}
+  if(data.user&&!bdLoginMode){bdRememberPendingSignup(email);bdRecoveryActions("resend");submit.disabled=true;submit.textContent="Account created — check your email";bdMessage("Your account has been created. Open the confirmation email once; after confirmation, Business Doctor AI will open automatically. You do not need to create the account again.","success");bdSetResendCooldown(60);return;}
   if(bdLoginMode&&!data.session){throw new Error("Login did not return an active session. Verify your email and try again.");}
   throw new Error("Authentication did not return a valid account session.");
  }catch(error){
