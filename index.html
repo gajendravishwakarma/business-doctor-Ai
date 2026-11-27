@@ -517,6 +517,7 @@ let bdRedirectingToStudio=false;
 bdSupabase.auth.onAuthStateChange((event,session)=>{
  if(event==="PASSWORD_RECOVERY"&&session){bdShowPasswordReset(session);return;}
  if((event==="SIGNED_IN"||event==="TOKEN_REFRESHED")&&session&&!bdRedirectingToStudio){
+  bdClearPendingSignup();
   bdRedirectingToStudio=true;
   bdMessage("Secure account verified. Opening your new Business Doctor AI Studio...","success");
   bdOpenWorkspace(session);
@@ -579,7 +580,11 @@ bdAuthForm.addEventListener("submit",async e=>{
  }catch(error){
   if(bdLoginMode)bdRecoveryActions("both");
   bdMessage(bdFriendlyAuthError(error.message),"error");
- }finally{submit.disabled=false;submit.textContent=original;}
+ }finally{
+  if(!bdLoginMode&&bdPendingSignupEmail()===email.toLowerCase()){
+   submit.disabled=true;submit.textContent="Account created — check your email";
+  }else{submit.disabled=false;submit.textContent=original;}
+ }
 });
 // Business onboarding is completed inside the authenticated new AI Studio.
 document.getElementById("bdLogout").addEventListener("click",async()=>{await bdSupabase.auth.signOut();bdSession=null;bdAuthForm.reset();bdBusinessForm.reset();bdAuthForm.style.display="block";bdBusinessForm.style.display="none";document.getElementById("bdMode").style.display="inline-flex";document.getElementById("bdLogout").style.display="none";bdMessage("You have been logged out.");});
