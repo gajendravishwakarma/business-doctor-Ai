@@ -463,7 +463,7 @@ function bdMessage(t,state="info"){bdStatus.textContent=t;bdStatus.dataset.state
 function bdRecoveryActions(kind="none"){document.getElementById("bdForgot").style.display=(kind==="forgot"||kind==="both")?"inline-flex":"none";document.getElementById("bdResend").style.display=(kind==="resend"||kind==="both")?"inline-flex":"none";}
 function bdFriendlyAuthError(message){
  const m=String(message||"");
- if(/rate.?limit|email rate limit|too many requests/i.test(m))return "Email sending limit reached. Please wait before requesting another email. Do not create another account.";
+ if(/over_email_send_rate_limit|security purposes.*only request this after|rate.?limit|email rate limit|too many requests/i.test(m))return "For security, email requests are temporarily limited. Please wait 36 seconds before requesting another email. Your account is not lost—do not create it again.";
  if(/already registered|already exists|user already/i.test(m))return "This email address is already registered. Choose Login instead of Create Account.";
  if(/invalid login credentials|invalid email or password/i.test(m))return "Incorrect email address or password. Check both fields and try again. If you have not verified your email, select Resend verification email.";
  if(/email not confirmed/i.test(m))return "Your email address is not verified yet. Select Resend verification email and use the newest link.";
